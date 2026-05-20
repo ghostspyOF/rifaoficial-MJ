@@ -148,7 +148,7 @@
     }
 
     async function atualizarTabelaComDados() {
-        const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKQVKl5Co-0jB_JRcMEbpe5OUJYhiM6Xror3J8UPRr-J-lN0SUkJ9rIvxpneagrIZY5ipzxQXYzIg4/pub?output=csv";
+        const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSoBAhPS9a75KBxRp6EVhp1a9uIvUBBQOGQPjBaXXZpJlTGFPFiboJIt3C0gRkcdJBHtuqKByafvTHl/pub?output=csv";
         try {
             const resposta = await fetch(URL_CSV);
             const dados = await resposta.text();
