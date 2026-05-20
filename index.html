@@ -1,0 +1,1159 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rifa V2.0</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f5f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            border: 1px solid #e0dbd1;
+        }
+
+        /* Cabeçalho */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed #d1a153;
+            padding-bottom: 20px;
+        }
+
+        .logo-text {
+            font-size: 14px;
+            font-weight: bold;
+            color: #0d3b66;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #0d3b66;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #d1a153;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        /* Seção de Prêmios */
+        .premios-container {
+            display: block;
+            margin-bottom: 30px;
+        }
+
+        .premio-card {
+            background: #faf8f5;
+            border: 1px solid #e6dfd3;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .badge {
+            background: #cc0000;
+            color: #fff;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+
+        .premio-titulo {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0d3b66;
+            margin-bottom: 5px;
+        }
+
+        .premio-detalhe {
+            font-size: 14px;
+            color: #555;
+            font-style: italic;
+        }
+
+        .premio-pix {
+            color: #008060;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        /* Estilo para as imagens dos prêmios */
+        .premio-img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #eee;
+            background: #fff;
+        }
+
+        /* Grade de Números */
+        .grid-container {
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .grid-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0d3b66;
+            margin-bottom: 15px;
+        }
+
+        .numeros-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .num-btn {
+            background: #ffffff;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .num-btn:hover {
+            border-color: #0d3b66;
+            background: #f0f4f8;
+        }
+
+        .num-btn.selecionado {
+            background: #cc0000 !important;
+            border-color: #990000 !important;
+            color: #ffffff !important;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* Estilo para números já vendidos vindos da planilha ou salvos no admin local */
+        .num-btn.vendido {
+            background: #cc0000 !important;
+            border-color: #990000 !important;
+            color: #ffffff !important;
+            opacity: 0.6;
+            cursor: not-allowed !important;
+            }
+
+        /* Estilo Modo Admin */
+        body.admin-mode .num-btn {
+            background: #e1ebf5 !important;
+            border-color: #a4c2e6 !important;
+            color: #0d3b66 !important;
+            opacity: 1 !important;
+            cursor: pointer !important;
+        }
+        
+        body.admin-mode .num-btn.tem-dados {
+            background: #b3d4f7 !important;
+            border-color: #0d3b66 !important;
+            position: relative;
+        }
+
+        /* Informações de valores e pix */
+        .info-rifa {
+            text-align: center;
+            margin: 30px 0;
+            background: #f0f4f8;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #0d3b66;
+        }
+
+        .info-rifa p {
+            margin: 5px 0;
+            font-size: 15px;
+        }
+
+        .valor-destaque {
+            font-size: 18px;
+            font-weight: bold;
+            color: #d1a153;
+        }
+
+        .chave-pix {
+            font-weight: bold;
+            color: #0d3b66;
+            background: #e1ebf5;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Botão Próximo Passo */
+        .acao-container {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-proximo {
+            background: #0d3b66;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: background 0.2s;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn-proximo:hover {
+            background: #092c4e;
+        }
+
+        .admin-botoes-grupo {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-admin {
+            background: #6c757d;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+
+        .btn-admin:hover {
+            background: #5a6268;
+        }
+
+        .btn-backup {
+            background: #d1a153;
+        }
+        .btn-backup:hover {
+            background: #b58941;
+        }
+
+        /* Modais */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-title {
+            color: #0d3b66;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 10px;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .modal-body p {
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .numeros-escolhidos {
+            background: #faf8f5;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e6dfd3;
+            font-weight: bold;
+            color: #cc0000;
+            letter-spacing: 1px;
+            word-wrap: break-word;
+        }
+
+        .valor-total {
+            font-size: 18px;
+            font-weight: bold;
+            color: #008060;
+            margin-top: 15px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-voltar {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-voltar:hover {
+            background: #d5d5d5;
+        }
+
+        .btn-salvar {
+            background: #0d3b66;
+            color: #fff;
+        }
+
+        .btn-salvar:hover {
+            background: #092c4e;
+        }
+
+        .btn-excluir {
+            background: #cc0000;
+            color: #fff;
+            margin-right: auto;
+        }
+
+        .btn-excluir:hover {
+            background: #a30000;
+        }
+
+        .btn-pagar {
+            background: #008060;
+            color: #fff;
+        }
+
+        .btn-pagar:hover {
+            background: #00664d;
+        }
+
+        .btn-copiar-pix {
+            background: #d1a153;
+            color: #fff;
+        }
+
+        .btn-copiar-pix:hover {
+            background: #b58941;
+        }
+
+        /* Ajustes Responsivos */
+        @media (max-width: 600px) {
+            .numeros-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 6px;
+            }
+            .num-btn {
+                padding: 8px 0;
+                font-size: 14px;
+            }
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+        }
+
+        .Rodape-seguro {
+            display: inline-flex;
+            align-items: center;
+            background-color: #e6f4ea;
+            color: #137333;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .Rodape-seguro::before {
+            content: "🔒";
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>SORTEIO BENEFICENTE</h1>
+            <h2>EM PROL DE AJUDAR NOSSO AMIGO</h2>
+            <img style="border-radius: 100%;" src="perfil.jpg" alt="R$ 400,00 no Pix " class="premio-img">
+            
+                <br><strong style="color: red; font-size: 15px;">
+                    SR. WILSON MARTINS PEREIRA
+                </strong></h2>
+            <div class="subtitle">Após um diagnóstico de próstata.</div>
+        <section class="info-rifa">
+        <strong style="color: black;">META DA ARRECADAÇAO</strong><br>
+        <p style="color: red; font-size: 30px;">R$ 21,000,00 <span style="font-size: 11px;"> (Vinte um Mil)</span></p><br>
+        <span style="color: black;">Valor Total da Cirugia</span>
+        </section>
+        
+            
+        </header>
+
+        <section class="premios-container">
+            <div class="premio-card">
+                <span class="badge">1º PRÊMIO</span>
+                <div class="premio-titulo">R$ 400,00 Reais no pix</div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV4PPHUfskAApw2SxX2RtXh7v47UPgM3bYnhs38tz6snOLH4Tz6Vefo5KM&s=10" alt="R$ 400,00 no Pix " class="premio-img">
+                <p>imagem ilustrativa</p>
+            </div>
+
+            <div class="premio-card">
+                <span class="badge">2º PRÊMIO</span>
+                <div class="premio-titulo">R$ 100,00 Reais no Pix</div>
+                <img src="https://st4.depositphotos.com/5344180/37845/i/450/depositphotos_378459600-stock-photo-banknote-one-hundred-reais-brazil.jpg" alt="R$ 100,00 no Pix" class="premio-img">
+                <p>imagem ilustrativa</p>
+            </div>
+        </section>
+
+        <section class="grid-container">
+            <div class="grid-title" id="txtGridTitulo">Selecione os seus números abaixo:</div><br>
+            
+<div style="text-align: center; width: 100%;">
+  <a href="Ajuda.html" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #0066ff; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2a8 8 0 0 0-8 8v4a2 2 0 0 0 2 2h1v-4H5v-2a7 7 0 1 1 14 0v2h-2v4h1a2 2 0 0 0 2-2v-4a8 8 0 0 0-8-8z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+      <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2"></path>
+    </svg>
+    Ajuda-me
+  </a><br>
+    <a href="Ajuda.html" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none;">
+     <p style="font-size: 12px; color: blue;">👆Vídeo Ensinando👆</p>
+    </a>
+     <p style="margin: 15px;">.</p>
+</div>
+ 
+
+            
+            <div class="numeros-grid" id="gridNumeros">
+            </div>
+        </section>
+
+        <section class="info-rifa">
+            <p class="valor-destaque">VALOR DA RIFA: R$ 20,00 <span style="font-size: 14px; color: #555; font-weight: normal;">(por número)</span></p>
+            <p><strong>DATA DO SORTEIO:</strong><br>
+            Quando todos os números forem preenchidos</p>
+            <p><strong>Selecionou seu Número(s)?</strong><br>
+                
+            <span style="color: Red;">
+            <strong>PRÓXIMO PASSO</strong><br>
+                Clique no Botão<br>
+            <strong>👇</strong>
+            </span>
+            </p>
+        </section>
+
+        <div class="acao-container">
+            <button class="btn-proximo" id="btnProximo">Próximo Passo</button>
+            <p style="color: #919191"> 
+               <steong style="font-size: 17px; color: #eb3a34">🤍 Mensagem de Agradecimento 🤍</steong><br>
+Gostaríamos de expressar a nossa mais profunda e sincera gratidão a 
+cada um de vocês que reservou um momento para comprar um número do 
+nosso sorteio e estender a mão ao SR. WILSON MARTINS PEREIRA neste momento tão delicado.            
+Quando sobemos da noticia, o nosso coração se encheu de preocupação, 
+mas ver a mobilização, a empatia e a generosidade de tantos amigos, familiares e 
+até mesmo de pessoas que nem o conheciam pessoalmente, nos devolveu a força e a 
+certeza de que ele não está sozinho nessa jornada delicada.<br>
+                <span>.<br></span>
+                
+Cada contribuição de vocês foi muito além do valor financeiro; foi um abraço 
+caloroso, uma dose de esperança e um combustível essencial para que o 
+SR. WILSON MARTINS PEREIRA e sua família possam focam no que realmente importa agora: a sua 
+reabilitação e o seu pronto restabelecimento. Vocês provaram que a solidariedade 
+é uma força poderosa capaz de transformar a dor em união. Que toda essa bondade e 
+carinho que vocês plantaram retorne em dobro, com muita saúde, paz e bênçãos na vida de 
+cada um. Muito obrigado por fazerem a diferença e por caminharem conosco pelo bem do <span style="color: black;">SR. WILSON MARTINS PEREIRA</span>! 
+            </p>
+
+            <hr style="margin: 20px;"><br>
+            <h2 style="color: red;">ATENÇÃO</h2>
+            <p style="font-size: 20px; color: #919191;">
+            Clique no botão VER para mais informações sobre como será o sorteio.<br>👇
+            </p>
+                <a href="Sorteio.html" class="btn-proximo" style="text-decoration: none; display: inline-block; text-align: center;">
+                VER</a>
+            <span style="margin-top: 20px;">-</span>
+            <div style="color: #919191;">
+            <p style="font-size: 20px; color: red;">Organizadores do Sorteio:<p>
+               
+            <p><strong>Administração do Sorteio:</strong><br>
+            Jeffeson Martins Mascarenha<br>
+            <strong>CONTATO</strong>: <a href="https://wa.me/556291740699" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.5 1.04c-5.438 0-9.863 4.374-9.867 9.806-.001 1.73.457 3.417 1.32 4.916l-.989 3.612 3.683-.966zM18.21 15.33c-.334-.167-1.977-.975-2.28-1.085-.304-.112-.525-.167-.746.167-.221.334-.856 1.085-1.049 1.307-.193.222-.387.251-.722.083-1.127-.565-2.203-1.043-3.056-2.511-.242-.416.242-.387.693-1.287.075-.15.038-.282-.019-.393-.056-.112-.525-1.265-.72-1.736-.19-.459-.383-.396-.525-.403-.135-.007-.29-.009-.444-.009-.155 0-.407.058-.621.288-.213.23-.814.796-.814 1.942 0 1.146.833 2.251.949 2.408.117.156 1.64 2.506 3.976 3.512.556.24 1.0.383 1.34.492.559.178 1.067.153 1.47.093.449-.067 1.47-.6 1.674-1.18.204-.58.204-1.079.143-1.18-.061-.101-.227-.168-.561-.335z"/>
+                </svg>
+                +55 62 9174-0699
+            </a>
+            </p><hr style="margin: 20px;">
+
+            <p><strong>Beneficiário:</strong><br>
+            SR. WILSON MARTINS PEREIRA<br>
+            <strong>CONTATO</strong>: <a href="https://wa.me/556392364261" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.5 1.04c-5.438 0-9.863 4.374-9.867 9.806-.001 1.73.457 3.417 1.32 4.916l-.989 3.612 3.683-.966zM18.21 15.33c-.334-.167-1.977-.975-2.28-1.085-.304-.112-.525-.167-.746.167-.221.334-.856 1.085-1.049 1.307-.193.222-.387.251-.722.083-1.127-.565-2.203-1.043-3.056-2.511-.242-.416.242-.387.693-1.287.075-.15.038-.282-.019-.393-.056-.112-.525-1.265-.72-1.736-.19-.459-.383-.396-.525-.403-.135-.007-.29-.009-.444-.009-.155 0-.407.058-.621.288-.213.23-.814.796-.814 1.942 0 1.146.833 2.251.949 2.408.117.156 1.64 2.506 3.976 3.512.556.24 1.0.383 1.34.492.559.178 1.067.153 1.47.093.449-.067 1.47-.6 1.674-1.18.204-.58.204-1.079.143-1.18-.061-.101-.227-.168-.561-.335z"/>
+                </svg>
+                +55 63 9236-4261
+            </a>
+            </p>
+            </div>
+             <a href="https://wa.me/5562995679219"><button style="
+    position: relative;
+    padding: 16px 40px;
+    margin: 20px;                                                  
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #25d366, #128c7e, #075e54, #25d366);
+    background-size: 400%;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+" 
+onmouseover="this.style.transform='scale(1.05)'" 
+onmouseout="this.style.transform='scale(1)'" 
+onmousedown="this.style.transform='scale(0.98)'" 
+onmouseup="this.style.transform='scale(1.05)'">
+    Quero Criar Meu Site
+</button></a><br><br>
+
+            
+            <a href="Salvo.html"><button style="
+    position: relative;
+    padding: 16px 40px;
+    margin: 20px;                                                  
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, <a href="https://wa.me/5562995679219"><button style="
+    position: relative;
+    padding: 16px 40px;
+    margin: 20px;                                                  
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #25d366, #d0d9d1, #d3f5d6, #656665);
+    background-size: 400%;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+" 
+onmouseover="this.style.transform='scale(1.05)'" 
+onmouseout="this.style.transform='scale(1)'" 
+onmousedown="this.style.transform='scale(0.98)'" 
+onmouseup="this.style.transform='scale(1.05)'">
+   🔒🔒🔒
+</button></a>
+            <dev>
+              
+      <p class="Rodape-seguro" style="margin-top: 200px;">🔒 AMBIENTE 100% SEGURO</p>
+              
+            </dev>
+
+
+            
+            <div class="admin-botoes-grupo">
+                <button class="btn-admin" id="btnAdmin">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Admin
+                </button>
+                <button class="btn-admin btn-backup" id="btnBackup" style="display: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v4M7 10l5 5 5-5M12 15V3"/></svg>
+                    Backup
+                </button>
+                <button class="btn-admin btn-backup" id="btnUpload" style="display: none;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                    Upload
+                </button>
+                <input type="file" id="fileUploadInput" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Cadastro / Admin -->
+    <div class="modal-overlay" id="modalCadastro">
+        <div class="modal-content">
+            <div class="modal-title" id="modalCadastroTitulo">Dados do Comprador - Número <span id="numSelecionadoTitulo">0</span></div>
+            <div class="modal-body">
+                <div class="form-group" id="grupoNumeroAdmin" style="display: none;">
+                    <label for="numeroAdminInput">Número da Rifa:</label>
+                    <input type="number" id="numeroAdminInput" min="1" max="500" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="nomeCliente">Nome Completo:</label>
+                    <input type="text" id="nomeCliente" placeholder="Digite seu nome">
+                </div>
+                <div class="form-group">
+                    <label for="whatsappCliente">WhatsApp / Informação:</label>
+                    <input type="text" id="whatsappCliente" placeholder="(00) 00000-0000">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-excluir" id="btnExcluirAdmin" style="display: none;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                    Excluir
+                </button>
+                <button class="btn-modal btn-voltar" id="btnCancelarCadastro">Cancelar</button>
+                <button class="btn-modal btn-salvar" id="btnSalvarCadastro">
+                    <span id="txtIconeSalvar"></span> Confirmar Número
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalConfirmacao">
+        <div class="modal-content">
+            <div class="modal-title">Confirmação de Reserva</div>
+            <div class="modal-body">
+                <p>Você selecionou os seguintes números:</p>
+                <div class="numeros-escolhidos" id="modalNumeros">--</div>
+                <div class="valor-total" id="modalTotal">Total: R$ 0,00</div>
+                <p style="margin-top: 15px; font-size: 13px; color: #666;">
+                    Chave Pix do Sorteio:<br>
+                    <strong style="color: red;">32865511120</strong><br>
+                    Nome:<br>
+                    <strong style="color: #FF3F1A;">WILSON MARTINS PEREIRA</strong><br>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-voltar" id="btnVoltar">Voltar</button>
+             <!--   <button class="btn-modal btn-copiar-pix" id="btnCopiarPix">Copiar PIX</button>-->
+                <button class="btn-modal btn-pagar" id="btnPagar">Copiar PIX</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Estrutura para armazenar os dados dos compradores por número
+        let reservas = JSON.parse(localStorage.getItem('rifa_reservas')) || {};
+        // Guarda os dados do primeiro cadastro de forma fixa no dispositivo
+        let dadosComprador = JSON.parse(localStorage.getItem('rifa_dados_comprador')) || null;
+        
+        // Estrutura do Painel Administrativo local
+        let reservasAdmin = JSON.parse(localStorage.getItem('rifa_reservas_admin')) || {};
+        let modoAdminAtivo = false;
+
+        const valorPorNumero = 20.00;
+        let numeroSendoEditado = null;
+
+        // Lista de números que já foram vendidos e confirmados por você na planilha diretamente
+        let numerosVendidosPlanilha = [];
+
+        // ==========================================
+        // TABELA DE LINKS DE PAGAMENTO POR VALOR TOTAL
+        // ==========================================
+        const LINKS_PAGAMENTO = {
+            "20.00": "32865511120", //1x20
+            "40.00": "32865511120", //2x20
+            "60.00": "32865511120", //3x20
+            "80.00": "32865511120", //4x20
+            "100.00": "32865511120", //5x20
+            "120.00": "32865511120", //6x20
+            "140.00": "32865511120", //7x20
+            "160.00": "32865511120", //8x20
+            "180.00": "32865511120", //9x20
+            "200.00": "32865511120",  //10x20
+            "220.00": "32865511120", //11x20
+            "240.00": "32865511120",  //12x20
+            "260.00": "32865511120",  //13x20  
+            "280.00": "32865511120",  //14x20
+            "300.00": "32865511120",  //15x20
+            "320.00": "32865511120",  //13x20
+            "340.00": "32865511120",  //17x20
+            "360.00": "32865511120",  //18x20
+            "380.00": "32865511120",  //19x20
+            "400.00": "32865511120"  //20x20
+        };
+
+        // Link CSV de publicação da sua planilha que você informou
+        const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKQVKl5Co-0jB_JRcMEbpe5OUJYhiM6Xror3J8UPRr-J-lN0SUkJ9rIvxpneagrIZY5ipzxQXYzIg4/pub?output=csv";
+
+        // Elementos da interface
+        const gridNumeros = document.getElementById('gridNumeros');
+        const btnProximo = document.getElementById('btnProximo');
+        const btnAdmin = document.getElementById('btnAdmin');
+        const btnBackup = document.getElementById('btnBackup');
+        const btnUpload = document.getElementById('btnUpload');
+        const fileUploadInput = document.getElementById('fileUploadInput');
+        const txtGridTitulo = document.getElementById('txtGridTitulo');
+        
+        // Modal Cadastro
+        const modalCadastro = document.getElementById('modalCadastro');
+        const modalCadastroTitulo = document.getElementById('modalCadastroTitulo');
+        const numSelecionadoTitulo = document.getElementById('numSelecionadoTitulo');
+        const grupoNumeroAdmin = document.getElementById('grupoNumeroAdmin');
+        const numeroAdminInput = document.getElementById('numeroAdminInput');
+        const nomeCliente = document.getElementById('nomeCliente');
+        const whatsappCliente = document.getElementById('whatsappCliente');
+        const btnCancelarCadastro = document.getElementById('btnCancelarCadastro');
+        const btnSalvarCadastro = document.getElementById('btnSalvarCadastro');
+        const btnExcluirAdmin = document.getElementById('btnExcluirAdmin');
+        const txtIconeSalvar = document.getElementById('txtIconeSalvar');
+
+        // Modal Confirmação
+        const modalConfirmacao = document.getElementById('modalConfirmacao');
+        const modalNumeros = document.getElementById('modalNumeros');
+        const modalTotal = document.getElementById('modalTotal');
+        const btnVoltar = document.getElementById('btnVoltar');
+        const btnCopiarPix = document.getElementById('btnCopiarPix');
+        const btnPagar = document.getElementById('btnPagar');
+
+        // Função para ler os dados vindos diretamente do link CSV da planilha
+        function carregarDadosDaPlanilha() {
+            fetch(SPREADSHEET_CSV_URL)
+            .then(response => response.text())
+            .then(data => {
+                let linhas = data.split('\n');
+                numerosVendidosPlanilha = [];
+
+                // Passa por cada linha da planilha para verificar o conteúdo da Coluna A
+                linhas.forEach((linha, index) => {
+                    let colunas = lineSplit(linha);
+                    if (colunas.length >= 1) {
+                        let conteudoColunaA = colunas[0].trim();
+                        let numeroRifaOcupado = index + 1;
+
+                        if (conteudoColunaA !== "") {
+                            numerosVendidosPlanilha.push(numeroRifaOcupado);
+                        }
+                    }
+                });
+
+                gerarGrid();
+            })
+            .catch(error => {
+                console.error("Erro ao ler dados da planilha publicado em CSV:", error);
+                gerarGrid();
+            });
+        }
+
+        // Função auxiliar robusta para separar colunas de CSV tratando aspas
+        function lineSplit(text) {
+            let p = false, d = [];
+            let r = [''];
+            for (let i=0; i<text.length; i++) {
+                let c = text[i];
+                if (c === '"') { p = !p; }
+                else if (c === ',' && !p) { r.push(''); }
+                else { r[r.length-1] += c; }
+            }
+            return r;
+        }
+
+        // Renderiza a visualização dos botões respeitando o modo ativo e as bases de dados
+        function gerarGrid() {
+            gridNumeros.innerHTML = "";
+
+            for (let i = 1; i <= 984; i++) {
+                const botao = document.createElement('button');
+                botao.classList.add('num-btn');
+                botao.innerText = i;
+                botao.type = 'button';
+                botao.id = `btn-num-${i}`;
+
+                // Se houver dados salvos no Admin Local para este respectivo número
+                const temDadosAdmin = reservasAdmin[i] && reservasAdmin[i].nome.trim() !== "" && reservasAdmin[i].whatsapp.trim() !== "";
+                
+                if (temDadosAdmin) {
+                    botao.classList.add('tem-dados');
+                }
+
+                if (modoAdminAtivo) {
+                    // Modo Admin: Todos os botões ficam acessíveis e interativos para clique
+                    if (reservas[i]) {
+                        botao.classList.add('selecionado');
+                    }
+                } else {
+                    // Modo Público: Se cadastrado no admin local com campos preenchidos, fica bloqueado e impossível clicar
+                    if (temDadosAdmin) {
+                        botao.classList.add('vendido');
+                        botao.disabled = true;
+                        gridNumeros.appendChild(botao);
+                        if (reservas[i]) {
+                            delete reservas[i];
+                            localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
+                        }
+                        continue;
+                    }
+
+                    // Se constar como ocupado na planilha externa do Google Docs
+                    if (numerosVendidosPlanilha.includes(i)) {
+                        botao.classList.add('vendido');
+                        botao.disabled = true;
+                        gridNumeros.appendChild(botao);
+                        if (reservas[i]) {
+                            delete reservas[i];
+                            localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
+                        }
+                        continue;
+                    }
+
+                    if (reservas[i]) {
+                        botao.classList.add('selecionado');
+                    }
+                }
+
+                botao.addEventListener('click', function() {
+                    numeroSendoEditado = i;
+                    
+                    if (modoAdminAtivo) {
+                        // Painel Admin: Abre configuração para atribuir ou remover dados de vendas
+                        modalCadastroTitulo.innerHTML = `Admin — Configurar Número <span id="numSelecionadoTitulo">${i}</span>`;
+                        grupoNumeroAdmin.style.display = 'block';
+                        numeroAdminInput.value = i;
+                        
+                        // Se houver dados, o ícone de lápis entra em ação e libera o botão de exclusão
+                        txtIconeSalvar.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
+                        btnExcluirAdmin.style.display = temDadosAdmin ? 'inline-flex' : 'none';
+
+                        if (reservasAdmin[i]) {
+                            nomeCliente.value = reservasAdmin[i].nome;
+                            whatsappCliente.value = reservasAdmin[i].whatsapp;
+                        } else {
+                            nomeCliente.value = '';
+                            whatsappCliente.value = '';
+                        }
+                        modalCadastro.style.display = 'flex';
+                    } else {
+                        // Fluxo Normal do comprador
+                        if (reservas[i]) {
+                            delete reservas[i];
+                            localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
+                            botao.classList.remove('selecionado');
+                        } else {
+                            modalCadastroTitulo.innerHTML = `Dados do Comprador - Número <span id="numSelecionadoTitulo">${i}</span>`;
+                            grupoNumeroAdmin.style.display = 'none';
+                            btnExcluirAdmin.style.display = 'none';
+                            txtIconeSalvar.innerHTML = '';
+                            numSelecionadoTitulo.innerText = i;
+
+                            if (dadosComprador) {
+                                nomeCliente.value = dadosComprador.nome;
+                                whatsappCliente.value = dadosComprador.whatsapp;
+                            } else {
+                                nomeCliente.value = '';
+                                whatsappCliente.value = '';
+                            }
+                            
+                            modalCadastro.style.display = 'flex';
+                        }
+                    }
+                });
+
+                gridNumeros.appendChild(botao);
+            }
+        }
+
+        // Ação do Botão Admin com Validação de Senha
+        btnAdmin.addEventListener('click', function() {
+            if (modoAdminAtivo) {
+                modoAdminAtivo = false;
+                document.body.classList.remove('admin-mode');
+                txtGridTitulo.innerText = "Selecione os seus números abaixo:";
+                btnAdmin.style.background = "#6c757d";
+                btnAdmin.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin`;
+                btnBackup.style.display = 'none';
+                btnUpload.style.display = 'none';
+                gerarGrid();
+            } else {
+                const senha = prompt("Digite a senha do administrador:");
+                if (senha === "Rif@D") {
+                    modoAdminAtivo = true;
+                    document.body.classList.add('admin-mode');
+                    txtGridTitulo.innerText = "PAINEL ADMIN ATIVO — Clique em um número para Editar/Excluir";
+                    btnAdmin.style.background = "#008060";
+                    btnAdmin.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Sair do Admin`;
+                    btnBackup.style.display = 'inline-flex';
+                    btnUpload.style.display = 'inline-flex';
+                    gerarGrid();
+                } else if (senha !== null) {
+                    alert("Senha incorreta!");
+                }
+            }
+        });
+
+        // Backup dos dados do Admin para arquivo JSON
+        btnBackup.addEventListener('click', function() {
+            const dadosStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reservasAdmin, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dadosStr);
+            downloadAnchor.setAttribute("download", "backup_rifa_admin.json");
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+        });
+
+        // Disparador do upload de arquivo JSON
+        btnUpload.addEventListener('click', function() {
+            fileUploadInput.click();
+        });
+
+        // Processa o upload do arquivo de backup
+        fileUploadInput.addEventListener('change', function(e) {
+            const arquivo = e.target.files[0];
+            if (!arquivo) return;
+
+            const leitor = new FileReader();
+            leitor.onload = function(event) {
+                try {
+                    const dadosCarregados = JSON.parse(event.target.result);
+                    if (typeof dadosCarregados === 'object' && dadosCarregados !== null) {
+                        reservasAdmin = dadosCarregados;
+                        localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
+                        alert('Backup restaurado com sucesso!');
+                        gerarGrid();
+                    } else {
+                        alert('Formato de arquivo inválido.');
+                    }
+                } catch(err) {
+                    alert('Erro ao processar o arquivo JSON.');
+                }
+            };
+            leitor.readAsText(arquivo);
+            fileUploadInput.value = ''; // Limpa o input
+        });
+
+        // Eventos do Modal de Cadastro
+        btnCancelarCadastro.addEventListener('click', function() {
+            modalCadastro.style.display = 'none';
+            numeroSendoEditado = null;
+        });
+
+        btnSalvarCadastro.addEventListener('click', function() {
+            const nome = nomeCliente.value.trim();
+            const whatsapp = whatsappCliente.value.trim();
+
+            if (!nome || !whatsapp) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+
+            if (modoAdminAtivo) {
+                const novoNumero = parseInt(numeroAdminInput.value);
+                if (isNaN(novoNumero) || novoNumero < 1 || novoNumero > 500) {
+                    alert('Número inválido! Escolha de 1 a 500.');
+                    return;
+                }
+                
+                reservasAdmin[novoNumero] = { nome: nome, whatsapp: whatsapp };
+                localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
+            } else {
+                dadosComprador = { nome: nome, whatsapp: whatsapp };
+                localStorage.setItem('rifa_dados_comprador', JSON.stringify(dadosComprador));
+
+                reservas[numeroSendoEditado] = { nome: nome, whatsapp: whatsapp };
+                localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
+            }
+            
+            modalCadastro.style.display = 'none';
+            numeroSendoEditado = null;
+            gerarGrid();
+        });
+
+        // Evento Excluir Reserva no Painel Admin (Ícone de lixeira)
+        btnExcluirAdmin.addEventListener('click', function() {
+            if (confirm(`Tem certeza que deseja apagar os dados do número ${numeroSendoEditado}?`)) {
+                if (reservasAdmin[numeroSendoEditado]) {
+                    delete reservasAdmin[numeroSendoEditado];
+                    localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
+                }
+                modalCadastro.style.display = 'none';
+                numeroSendoEditado = null;
+                gerarGrid();
+            }
+        });
+
+        // Ação do botão Próximo Passo
+        btnProximo.addEventListener('click', function() {
+            const numerosSelecionados = Object.keys(reservas).map(Number);
+
+            if (numerosSelecionados.length === 0) {
+                alert('Por favor, selecione e cadastre pelo menos um número.');
+                return;
+            }
+
+            numerosSelecionados.sort((a, b) => a - b);
+            modalNumeros.innerText = numerosSelecionados.join(', ');
+            
+            const total = numerosSelecionados.length * valorPorNumero;
+            modalTotal.innerText = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
+
+            modalConfirmacao.style.display = 'flex';
+        });
+
+        // Fechar Modal de Confirmação
+        btnVoltar.addEventListener('click', function() {
+            modalConfirmacao.style.display = 'none';
+        });
+
+        // Função interna para processar o envio do Whatsapp e cópia do pix
+        function finalizarEEnviar() {
+            navigator.clipboard.writeText("32865511120").catch(err => {
+                console.error("Erro ao copiar PIX automaticamente: ", err);
+            });
+
+            const numerosSelecionados = Object.keys(reservas).map(Number).sort((a, b) => a - b);
+            const total = numerosSelecionados.length * valorPorNumero;
+            const totalChave = total.toFixed(2);
+            
+            const linkPagamentoExato = LINKS_PAGAMENTO[totalChave] || "Link de pagamento não configurado para este valor.";
+
+            const primeiroNumero = numerosSelecionados[0];
+            const nomeComprador = reservas[primeiroNumero]?.nome || dadosComprador?.nome || "";
+            const whatsComprador = reservas[primeiroNumero]?.whatsapp || dadosComprador?.whatsapp || "";
+
+            let textoWhatsapp = `Administração: Desde agora nós organizadores agradece a sua participação\n\n`;
+            textoWhatsapp += `👤 *Nome:* ${nomeComprador}\n`;
+            textoWhatsapp += `📱 *WhatsApp:* ${whatsComprador}\n\n`;
+            textoWhatsapp += `🔢 *Números Escolhidos:* ${numerosSelecionados.join(', ')}\n`;
+            textoWhatsapp += `💰 *Valor Total:* R$ ${total.toFixed(2).replace('.', ',')}\n\n`;
+            textoWhatsapp += `🔗 *Pix para Pagamento:* ${linkPagamentoExato}\n\n`;
+            textoWhatsapp += `*Nome do Pix:* WILSON MARTINS PEREIRA\n`;
+            textoWhatsapp += `Pague com o Pix ☝️👆\n\n`;
+            textoWhatsapp += `Por favor, nos enviar o comprovante aqui mesmo para valide seu números!`;
+            textoWhatsapp += `Em caso de dúvidas o contato do beneficiário abaixo.\n\n`;
+            textoWhatsapp += `*Contato do Beneficiado:*\n\n`;
+            textoWhatsapp += `*WILSON MARTINS PEREIRA\n\n`;
+            textoWhatsapp += `*CONTAT0: 55 63 92364261\n\n`;
+            textoWhatsapp += `____________________________\n\n`;
+            textoWhatsapp += `*CLICA EM ENVIAR MENSAGEM AUTOMATICA*\n\n`;
+            textoWhatsapp += `👉👉👉👉👉👉\n\n`;
+
+            const textoCodificado = encodeURIComponent(textoWhatsapp);
+            const numeroDestino = "556291740699";
+
+            const urlFinalWhatsapp = `https://api.whatsapp.com/send?phone=${numeroDestino}&text=${textoCodificado}`;
+
+            window.open(urlFinalWhatsapp, '_blank');
+
+            modalConfirmacao.style.display = 'none';
+        }
+
+        // Ação do botão Copiar PIX
+        btnPagar.addEventListener('click', function() {
+            finalizarEEnviar();
+        });
+
+        // Inicializa a página carregando os dados da planilha antes de tudo
+        carregarDadosDaPlanilha();
+
+        // Executa a função carregarDadosDaPlanilha a cada 30 segundos de forma automatizada
+        setInterval(carregarDadosDaPlanilha, 30000);
+    </script>
+</body>
+</html>

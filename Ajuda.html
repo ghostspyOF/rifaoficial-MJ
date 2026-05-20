@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuda - Como Escolher Seus Números</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f7f5f0;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px 10px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 20px;
+            border: 1px solid #e0dbd1;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed #d1a153;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: #0d3b66;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        h2 {
+            color: #d1a153;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* Estilo do Botão do YouTube */
+        .btn-youtube {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #ff0000;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            margin: 20px auto;
+            max-width: 320px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background 0.3s;
+        }
+
+        .btn-youtube:hover {
+            background: #cc0000;
+        }
+
+        .passo-card {
+            background: #faf8f5;
+            border-left: 5px solid #0d3b66;
+            border-radius: 0 8px 8px 0;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .passo-card h3 {
+            color: #cc0000;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .passo-card p {
+            font-size: 15px;
+            color: #555;
+        }
+
+        .btn-voltar {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 40px auto 10px;
+            background: #0d3b66;
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+            transition: background 0.2s;
+        }
+
+        .btn-voltar:hover {
+            background: #092c4e;
+        }
+
+        .atencao-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>PASSO A PASSO</h1>
+            <h2>Como participar do sorteio</h2>
+        </header>
+
+        <div class="atencao-box">
+            Clique no botão abaixo para assistir ao vídeo explicativo no YouTube:<br>
+             <a href="https://youtube.com/shorts/aCXgrHyUQrA" target="_blank" class="btn-youtube">
+            <i class="fab fa-youtube"></i> <span style="font-size: 12px;">Assistir Vídeo no YouTube Ensinando</span>
+        </a>
+        </div>
+        
+         <div class="atencao-box">
+             Explicação por esceito:
+         </div>
+
+        <section class="passos-container">
+            <div class="passo-card passo-anim">
+                <h3>🔢 Passo 1: Escolha seus Números</h3>
+                <p>Na tela principal, desça até a cartela de números. Clique nos números disponíveis (brancos) que você deseja comprar.</p>
+            </div>
+
+            <div class="passo-card passo-anim">
+                <h3>📝 Passo 2: Preencha seus Dados</h3>
+                <p>Após clicar, preencha seu Nome Completo e WhatsApp. Depois clique em "Confirmar Número".</p>
+            </div>
+
+            <div class="passo-card passo-anim">
+                <h3>➡️ Passo 3: Finalize</h3>
+                <p>Ao terminar, role até o final da página e clique no botão azul <strong>"Próximo Passo"</strong>.</p>
+            </div>
+
+            <div class="passo-card passo-anim">
+                <h3>💸 Passo 4: Pagamento</h3>
+                <p>Clique em <strong>"Copiar PIX"</strong>, faça o pagamento no seu banco e envie o comprovante no WhatsApp do administrador.</p>
+            </div>
+        </section>
+
+        <a href="index.html" class="btn-voltar">Voltar para a Rifa</a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const passos = document.querySelectorAll('.passo-anim');
+            passos.forEach((passo, index) => {
+                passo.style.opacity = '0';
+                passo.style.transform = 'translateY(20px)';
+                passo.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                setTimeout(() => {
+                    passo.style.opacity = '1';
+                    passo.style.transform = 'translateY(0)';
+                }, 200 * (index + 1));
+            });
+        });
+    </script>
+</body>
+</html>

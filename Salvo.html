@@ -1,0 +1,200 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Ordem Organizadar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .container { background-color: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #333; margin-bottom: 25px; }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; color: #555; font-weight: 600; font-size: 14px; }
+        input[type="text"], input[type="password"] { width: 100%; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; }
+        .checkbox-container { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+        .checkbox-container input[type="checkbox"] { accent-color: red; width: 18px; height: 18px; cursor: pointer; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+        
+        /* Modais */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100vw; height: 100vh; background-color: #fff; }
+        .modal-content { padding: 20px; height: 100%; display: flex; flex-direction: column; }
+        .modal-header { display: flex; gap: 10px; margin-bottom: 10px; }
+        .tabela-container { flex-grow: 1; overflow-y: auto; border: 1px solid #ccc; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background: #f4f6f9; position: sticky; top: 0; }
+        
+        #modalLogin { display: flex; align-items: center; justify-content: center; background-color: rgba(0,0,0,0.8); }
+        .login-box { background: white; padding: 20px; border-radius: 8px; width: 300px; }
+        
+        #mensagem { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 4000; padding: 20px 40px; border-radius: 8px; font-weight: bold; display: none; background-color: #d4edda; color: #155724; border: 2px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+
+<div id="modalLogin" class="modal" style="display: flex;">
+    <div class="login-box">
+        <h2>Acesso Restrito</h2>
+        <div class="form-group"><label>ID:</label><input type="text" id="loginId"></div>
+        <div class="form-group"><label>Senha:</label><input type="password" id="loginSenha"></div>
+        <button id="btnEntrar">Entrar</button>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Registro de Ordem</h2>
+    <form id="meuFormulario">
+        <div class="form-group"><label for="campoB">Nome e WhatsApp:</label><input type="text" id="campoB" required placeholder="Ex.: Mayckon: 62995679219"></div>
+        <div class="form-group"><label for="campoC">Número do Sorteio</label><input type="text" id="campoC" required placeholder="Ex.: 1, 2, 3..."></div>
+        <div class="checkbox-container">
+            <input type="checkbox" id="campoF"><label for="campoF">EXCLUIR</label>
+            <input type="checkbox" id="campoE" style="accent-color: green; margin-left: 20px;"><label for="campoE">PAGO</label>
+        </div>
+        <button type="submit" id="btnEnviar">Enviar Dados</button>
+        <button type="button" id="btnVisualizar" style="background-color: #28a745;">Visualizar Planilha</button>
+    </form>
+</div>
+
+<div id="mensagem">Enviado com sucesso!</div>
+
+<div id="meuModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button onclick="document.getElementById('meuModal').style.display='none'" style="width: auto; background: #666;">Fechar</button>
+            <input type="text" id="pesquisa" placeholder="Pesquisar número ou nome..." style="flex-grow: 1;">
+            <button id="btnCopiar" style="width: auto; background: #ff9800;">Copiar Coluna</button>
+        </div>
+        <div class="tabela-container">
+            <table id="tabelaPlanilha">
+                <thead><tr><th>Número</th><th>Resultado</th></tr></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Login Lógica
+    if (localStorage.getItem('autenticado') === 'true') {
+        document.getElementById('modalLogin').style.display = 'none';
+    }
+
+    document.getElementById('btnEntrar').onclick = () => {
+        if (document.getElementById('loginId').value === 'Mayckon' && document.getElementById('loginSenha').value === 'MJSR10') {
+            localStorage.setItem('autenticado', 'true');
+            document.getElementById('modalLogin').style.display = 'none';
+        } else {
+            alert('ID ou Senha incorretos!');
+        }
+    };
+
+    const form = document.getElementById('meuFormulario');
+    const campoB = document.getElementById('campoB');
+    const campoC = document.getElementById('campoC');
+    const campoF = document.getElementById('campoF');
+    const campoE = document.getElementById('campoE');
+    const btnEnviar = document.getElementById('btnEnviar');
+    const msgDiv = document.getElementById('mensagem');
+
+    function salvarDados() {
+        localStorage.setItem('salvo_campoB', campoB.value);
+        localStorage.setItem('salvo_campoC', campoC.value);
+        localStorage.setItem('salvo_campoF', campoF.checked);
+        localStorage.setItem('salvo_campoE', campoE.checked);
+    }
+
+    function carregarDados() {
+        campoB.value = localStorage.getItem('salvo_campoB') || '';
+        campoC.value = localStorage.getItem('salvo_campoC') || '';
+        campoF.checked = localStorage.getItem('salvo_campoF') === 'true';
+        campoE.checked = localStorage.getItem('salvo_campoE') === 'true';
+        campoB.required = !campoF.checked;
+    }
+
+    carregarDados();
+    [campoB, campoC, campoF, campoE].forEach(el => el.addEventListener('input', salvarDados));
+    campoF.addEventListener('change', () => { campoB.required = !campoF.checked; salvarDados(); });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        btnEnviar.disabled = true;
+        btnEnviar.innerText = "Enviando...";
+        
+        const valorFinal = campoC.value + "- " + campoB.value;
+        const URL_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdUoZRuvriHe0ckcFqiiP21IpPUiWwCXDj6v-kjSFBwVxTBPQ/formResponse";
+        const formData = new URLSearchParams();
+        
+        formData.append('entry.261146750', valorFinal);
+        formData.append('entry.322307715', campoC.value);
+        formData.append('entry.1038733891', campoF.checked ? 'EXCLUIR' : '');
+        formData.append('entry.904132235', campoE.checked ? 'PAGO' : '');
+
+        fetch(URL_FORM, { method: 'POST', mode: 'no-cors', body: formData })
+        .then(() => {
+            msgDiv.style.display = "block";
+            setTimeout(() => { msgDiv.style.display = "none"; }, 2000);
+        })
+        .finally(() => { btnEnviar.disabled = false; btnEnviar.innerText = "Enviar Dados"; });
+    });
+
+    const tbody = document.querySelector("#tabelaPlanilha tbody");
+    
+    for (let i = 1; i <= 1000; i++) {
+        tbody.innerHTML += `<tr id="linha${i}"><td>${i}</td><td class="conteudo">Carregando...</td></tr>`;
+    }
+
+    async function atualizarTabelaComDados() {
+        const URL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTKQVKl5Co-0jB_JRcMEbpe5OUJYhiM6Xror3J8UPRr-J-lN0SUkJ9rIvxpneagrIZY5ipzxQXYzIg4/pub?output=csv";
+        try {
+            const resposta = await fetch(URL_CSV);
+            const dados = await resposta.text();
+            const linhas = dados.split('\n');
+            
+            for (let i = 0; i < 1000; i++) {
+                let linhaTabela = document.getElementById(`linha${i + 1}`);
+                if (linhaTabela) {
+                    let conteudo = "-"; 
+                    if (linhas[i]) {
+                        let valorDaLinha = linhas[i].split(',')[0];
+                        if (valorDaLinha && valorDaLinha.trim() !== "") {
+                            conteudo = valorDaLinha;
+                        }
+                    }
+                    linhaTabela.querySelector('.conteudo').innerText = conteudo;
+                }
+            }
+        } catch (erro) {
+            console.error("Erro ao carregar planilha:", erro);
+        }
+    }
+
+    // Lógica de pesquisa com atraso para não travar
+    let timeoutPesquisa;
+    document.getElementById('pesquisa').addEventListener('input', function() {
+        clearTimeout(timeoutPesquisa);
+        const termo = this.value.toLowerCase();
+        timeoutPesquisa = setTimeout(() => {
+            document.querySelectorAll('#tabelaPlanilha tbody tr').forEach(tr => {
+                tr.style.display = tr.innerText.toLowerCase().includes(termo) ? '' : 'none';
+            });
+        }, 300); // Aguarda 300ms após parar de digitar
+    });
+
+    document.getElementById('btnCopiar').addEventListener('click', function() {
+        let texto = "";
+        document.querySelectorAll('.conteudo').forEach(td => texto += td.innerText + "\n");
+        navigator.clipboard.writeText(texto).then(() => alert("Copiado com sucesso!"));
+    });
+
+    document.getElementById("btnVisualizar").onclick = () => {
+        document.getElementById("meuModal").style.display = "block";
+        atualizarTabelaComDados();
+    };
+</script>
+
+</body>
+</html>
