@@ -1,10 +1,15 @@
 
-<!DOCTYPE html>
+
+
+    <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rifa V2.0</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <title>Sorteio.Jf</title>
     <style>
         * {
             box-sizing: border-box;
@@ -294,18 +299,19 @@
 
         /* Modais */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 15px;
-        }
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 15px;
+}
+
 
         .modal-content {
             background: #fff;
@@ -474,27 +480,311 @@
             content: "🔒";
             margin-right: 6px;
         }
+        
+            /* Estilo do novo cabeçalho no topo */
+                .top-brand-bar {
+            background: linear-gradient(135deg, #0d3b66, #1a5c96);
+            padding: 10px 20px;
+            border-bottom: 3px solid #E3D405;
+            border-radius: 0 0 20px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* Alterado para fixo no topo da tela */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 9999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .brand-img {
+            width: 100px;
+            height: 40px;
+            border-radius: 0 20px 0 20px;
+            border: none;
+            border: 2px solid #fff;
+            object-fit: cover;
+        }
+
+        .brand-name {
+            color: #ffffff;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+            /* Estilo do menu hambúrguer */
+        .menu-container {
+            margin-left: auto;
+            position: relative;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: #179632;
+            border-radius: 2px;
+        }
+
+                .menu-links {
+            display: none; /* Inicia escondido */
+            position: absolute;
+            right: 0;
+            top: 23px; /* Ajuste para ficar logo abaixo da barra fixa */
+            background: #081A59;
+            border-radius: 3px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            padding: 5px;
+            z-index: 9999;
+            width: 190px;
+            flex-direction: column;
+            align-items: center; /* Centraliza os botões */
+            gap: 10px;
+        }
+
+        .menu-links a {
+            text-decoration: none;
+            width: 100%;
+            display: flex;
+            justify-content: center; /* Centraliza o botão dentro da âncora */
+        }
+
+        /* NOVO MODAL FLUTUANTE */
+        .modal-flutuante {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 9998;
+            border: 2px solid #0d3b66;
+            max-width: 250px;
+            animation: slideInUp 0.3s ease;
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+    /* Container principal para centralizar o robô se necessário */
+    .robot-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: none;
+        background-color: #fff; /* Cor de fundo opcional para contraste */
+        border-radius: none;
+        width: fit-content;
+        margin: 20px auto; /* Centraliza na página */
+    }
+
+    /* Desenho da Cabeça do Robô */
+    .robot-face {
+        width: 30px;
+        height: 26px;
+        background: linear-gradient(145deg, #7e7e7e, #a1a1a1); /* Tom metálico */
+        border: 1px solid #444;
+        border-radius: 4px 4px 1px 1px; /* Cantos arredondados em cima */
+        position: relative;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    }
+
+    /* Antena (Opcional, mas dá charme) */
+    .robot-face::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 6px;
+        background-color: #444;
+        border-radius: 1px 1px 0 0;
+    }
+    .robot-face::after {
+        content: '';
+        position: absolute;
+        top: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background-color: #ff4444; /* Ponta da antena vermelha */
+        border-radius: 50%;
+        border: 1px solid #444;
+    }
+
+    /* Área dos Olhos */
+    .eyes-container {
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin: 7px auto 0 auto;
+    }
+
+    /* Desenho Base do Olho */
+    .eye {
+        width: 7px;
+        height: 7px;
+        background-color: #333; /* Fundo do olho quando fechado */
+        border-radius: 50%;
+        border: 1px solid #222;
+        position: relative;
+        overflow: hidden; /* Esconde o brilho quando o olho fecha */
+    }
+
+    /* A parte que brilha e muda de cor (a "pupila") */
+    .eye-glow {
+        width: 100%;
+        height: 100%;
+        background-color: limegreen; /* Cor inicial */
+        border-radius: 50%;
+        box-shadow: 0 0 3px limegreen; /* Brilho inicial */
+        
+        /* Aplicação da Animação */
+        animation: blinkAndColorChange 2s infinite linear;
+    }
+
+    /* Desenho da Boca */
+    .mouth {
+        width: 12px;
+        height: 2px;
+        background-color: #333;
+        border-radius: 1px;
+        margin: 4px auto 0 auto;
+    }
+
+    /* DEFINIÇÃO DA ANIMAÇÃO (Keyframes)
+       Esta animação controla o piscar (escala vertical)
+       e a mudança de cor (Verde -> Amarelo -> Vermelho).
+    */
+    @keyframes blinkAndColorChange {
+        /* 0% - 30%: VERDE (Aberto) */
+        0%, 28% {
+            transform: scaleY(1);
+            background-color: limegreen;
+            box-shadow: 0 0 3px limegreen;
+        }
+        /* 29%: Piscar rápido no Verde */
+        29% {
+            transform: scaleY(0.1);
+        }
+        
+        /* 30% - 60%: AMARELO (Aberto) */
+        30%, 58% {
+            transform: scaleY(1);
+            background-color: gold;
+            box-shadow: 0 0 3px gold;
+        }
+        /* 59%: Piscar rápido no Amarelo */
+        59% {
+            transform: scaleY(0.1);
+        }
+
+        /* 60% - 90%: VERMELHO (Aberto) */
+        60%, 88% {
+            transform: scaleY(1);
+            background-color: red;
+            box-shadow: 0 0 3px red;
+        }
+        /* 89%: Piscar rápido no Vermelho */
+        89% {
+            transform: scaleY(0.1);
+        }
+
+        /* 100%: Retorna ao Verde */
+        100% {
+            transform: scaleY(1);
+            background-color: limegreen;
+            box-shadow: 0 0 3px limegreen;
+        }
+    }
+    /*___________*/
+    
+    
+
+
+
+        
     </style>
 </head>
 <body>
 
     <div class="container">
         <header>
-            <h1>SORTEIO BENEFICENTE</h1>
-            <h2>EM PROL DE AJUDAR NOSSO AMIGO</h2>
-            <img style="border-radius: 100%;" src="perfil.jpg" alt="R$ 400,00 no Pix " class="premio-img">
+             <div class="top-brand-bar">
+        <img src="logo.png" alt="Quark" class="brand-img">
+        <span class="brand-name" style="font-size: 20px;">
+            <span class="material-icons">sports_soccer</span>
+            PRÊMIO FÁCIL
+            <span class="material-icons">emoji_events</span><br>
+            
+        </span>
+        
+        <div class="menu-container">
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="menu-links" id="menuLinks">
+              
+                <a href="Salvo.html"><button style="font-size: 15px; margin: 3px; background: none; color: #D4AF37;" class="btn-admin">
+                ADMIN<span class="material-icons">settings</span>
+                </button></a><hr style="border: none; height: 2px; background: linear-gradient(to right, transparent, #D4AF37, transparent);">
+
+                <a href="Como-sera.html"><button style="font-size: 15px; margin: 3px; background: none; color: #D4AF37;" class="btn-admin">
+                COMO SERÁ O SORTEIO <span class="material-icons">info</span>
+                </button></a><hr style="border: none; height: 2px; background: linear-gradient(to right, transparent, #D4AF37, transparent);">
+                
+                <a href="Cria-site.html"><button style=" font-size: 15px; margin: 3px; background: none; color: #D4AF37; display: flex; align-items: center; justify-content: center; width: 100%; border: none; cursor: pointer;" class="btn-admin">
+               CRIAR MEU SITE <i class="fas fa-search" style="margin-left: 10px;"></i>
+               </button></a><hr style="border: none; height: 2px; background: linear-gradient(to right, transparent, #D4AF37, transparent);">
+                
+                <a href="Sorteio.html"><button style="font-size: 15px; margin: 3px; background: none; color: #D4AF37;" class="btn-admin">
+                REALIZAR SORTEIO  <span style="color: red font-size: 18;"><i class="fas fa-dice"></i></span>               
+                </button></a><hr style="border: none; height: 2px; background: linear-gradient(to right, transparent, #D4AF37, transparent);">
+                
+                <a href="Sobre.html"><button style="font-size: 15px; margin: 3px; background: none; color: #D4AF37;" class="btn-admin">
+                SOBRE <span class="material-icons">info</span>
+                </button></a><hr style="border: none; height: 2px; background: linear-gradient(to right, transparent, #D4AF37, transparent);">
+                
+                <a href="Ajuda.html"><button style="font-size: 15px; margin: 3px; background: none; color: #D4AF37;" class="btn-admin">
+                AJUDA <span class="material-icons">help</span>
+                </button></a>
+                
+            </div>
+        </div>
+    </div><p style="margin-top: 50px; font-size: 8px;">.</p>
+
+
+            
+            <h1>SORTEIO</h1>
+            
+            <img style="border-radius: 100%;" src="perfil.jpg" alt="Foto de Perfil" class="premio-img">
             
                 <br><strong style="color: red; font-size: 15px;">
                     SR. WILSON MARTINS PEREIRA
                 </strong></h2>
-            <div class="subtitle">Após um diagnóstico de próstata.</div>
+            <div class="subtitle">Após um diagnóstico de próstata, precisará fazer uma cirurgia.</div>
         <section class="info-rifa">
-        <strong style="color: black;">META DA ARRECADAÇAO</strong><br>
-        <p style="color: red; font-size: 30px;">R$ 21,000,00 <span style="font-size: 11px;"> (Vinte um Mil)</span></p><br>
-        <span style="color: black;">Valor Total da Cirugia</span>
+        <strong style="color: black;">META DA ARECADAÇÃO</strong><br>
+        <p style="color: red; font-size: 30px;">R$ 21,000,00</p><br>
+        <span style="color: black;">Valor Total da Cirurgia</span>
         </section>
         
-            
         </header>
 
         <section class="premios-container">
@@ -515,22 +805,7 @@
 
         <section class="grid-container">
             <div class="grid-title" id="txtGridTitulo">Selecione os seus números abaixo:</div><br>
-            
-<div style="text-align: center; width: 100%;">
-  <a href="Ajuda.html" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #0066ff; color: #ffffff; text-decoration: none; padding: 12px 24px; border-radius: 8px; font-family: Arial, sans-serif; font-size: 16px; font-weight: bold;">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 2a8 8 0 0 0-8 8v4a2 2 0 0 0 2 2h1v-4H5v-2a7 7 0 1 1 14 0v2h-2v4h1a2 2 0 0 0 2-2v-4a8 8 0 0 0-8-8z"></path>
-      <circle cx="12" cy="10" r="3"></circle>
-      <path d="M7 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2"></path>
-    </svg>
-    Ajuda-me
-  </a><br>
-    <a href="Ajuda.html" target="_blank" style="display: inline-flex; align-items: center; text-decoration: none;">
-     <p style="font-size: 12px; color: blue;">👆Vídeo Ensinando👆</p>
-    </a>
-     <p style="margin: 15px;">.</p>
-</div>
- 
+   
 
             
             <div class="numeros-grid" id="gridNumeros">
@@ -538,32 +813,25 @@
         </section>
 
         <section class="info-rifa">
-            <p class="valor-destaque">VALOR DA RIFA: R$ 20,00 <span style="font-size: 14px; color: #555; font-weight: normal;">(por número)</span></p>
-            <p><strong>DATA DO SORTEIO:</strong><br>
-            Quando todos os números forem preenchidos</p>
-            <p><strong>Selecionou seu Número(s)?</strong><br>
-                
-            <span style="color: Red;">
-            <strong>PRÓXIMO PASSO</strong><br>
-                Clique no Botão<br>
-            <strong>👇</strong>
-            </span>
-            </p>
-        </section>
+            <p class="valor-destaque">VALOR DO SORTEIO: R$ 20,00 <span style="font-size: 10px; font-weight: normal;">(por número)</span></p>          
+            <button class="btn-proximo" id="btnProximo">​
+            <p><strong style="color: Red;">DATA DO SORTEIO:</strong><br>
+                Quando todos os números forem preenchidos</p>
+            </button>
+     
+         </section>
 
-        <div class="acao-container">
-            <button class="btn-proximo" id="btnProximo">Próximo Passo</button>
+        <div class="acao-container">            
             <p style="color: #919191"> 
                <steong style="font-size: 17px; color: #eb3a34">🤍 Mensagem de Agradecimento 🤍</steong><br>
 Gostaríamos de expressar a nossa mais profunda e sincera gratidão a 
 cada um de vocês que reservou um momento para comprar um número do 
 nosso sorteio e estender a mão ao SR. WILSON MARTINS PEREIRA neste momento tão delicado.            
-Quando sobemos da noticia, o nosso coração se encheu de preocupação, 
+Quando sobemos da noticia, o nosso coração se echeu de preocupação, 
 mas ver a mobilização, a empatia e a generosidade de tantos amigos, familiares e 
 até mesmo de pessoas que nem o conheciam pessoalmente, nos devolveu a força e a 
 certeza de que ele não está sozinho nessa jornada delicada.<br>
-                <span>.<br></span>
-                
+                <br>
 Cada contribuição de vocês foi muito além do valor financeiro; foi um abraço 
 caloroso, uma dose de esperança e um combustível essencial para que o 
 SR. WILSON MARTINS PEREIRA e sua família possam focam no que realmente importa agora: a sua 
@@ -572,72 +840,8 @@ reabilitação e o seu pronto restabelecimento. Vocês provaram que a solidaried
 carinho que vocês plantaram retorne em dobro, com muita saúde, paz e bênçãos na vida de 
 cada um. Muito obrigado por fazerem a diferença e por caminharem conosco pelo bem do <span style="color: black;">SR. WILSON MARTINS PEREIRA</span>! 
             </p>
-
-            <hr style="margin: 20px;"><br>
-            <h2 style="color: red;">ATENÇÃO</h2>
-            <p style="font-size: 20px; color: #919191;">
-            Clique no botão VER para mais informações sobre como será o sorteio.<br>👇
-            </p>
-                <a href="Sorteio.html" class="btn-proximo" style="text-decoration: none; display: inline-block; text-align: center;">
-                VER</a>
-            <span style="margin-top: 20px;">-</span>
-            <div style="color: #919191;">
-            <p style="font-size: 20px; color: red;">Organizadores do Sorteio:<p>
-               
-            <p><strong>Administração do Sorteio:</strong><br>
-            Jeffeson Martins Mascarenha<br>
-            <strong>CONTATO</strong>: <a href="https://wa.me/556291740699" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.5 1.04c-5.438 0-9.863 4.374-9.867 9.806-.001 1.73.457 3.417 1.32 4.916l-.989 3.612 3.683-.966zM18.21 15.33c-.334-.167-1.977-.975-2.28-1.085-.304-.112-.525-.167-.746.167-.221.334-.856 1.085-1.049 1.307-.193.222-.387.251-.722.083-1.127-.565-2.203-1.043-3.056-2.511-.242-.416.242-.387.693-1.287.075-.15.038-.282-.019-.393-.056-.112-.525-1.265-.72-1.736-.19-.459-.383-.396-.525-.403-.135-.007-.29-.009-.444-.009-.155 0-.407.058-.621.288-.213.23-.814.796-.814 1.942 0 1.146.833 2.251.949 2.408.117.156 1.64 2.506 3.976 3.512.556.24 1.0.383 1.34.492.559.178 1.067.153 1.47.093.449-.067 1.47-.6 1.674-1.18.204-.58.204-1.079.143-1.18-.061-.101-.227-.168-.561-.335z"/>
-                </svg>
-                +55 62 9174-0699
-            </a>
-            </p><hr style="margin: 20px;">
-
-            <p><strong>Beneficiário:</strong><br>
-            SR. WILSON MARTINS PEREIRA<br>
-            <strong>CONTATO</strong>: <a href="https://wa.me/556392364261" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background-color: #d4edda; color: #155724; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.966C16.528 1.975 14.067 1.04 11.5 1.04c-5.438 0-9.863 4.374-9.867 9.806-.001 1.73.457 3.417 1.32 4.916l-.989 3.612 3.683-.966zM18.21 15.33c-.334-.167-1.977-.975-2.28-1.085-.304-.112-.525-.167-.746.167-.221.334-.856 1.085-1.049 1.307-.193.222-.387.251-.722.083-1.127-.565-2.203-1.043-3.056-2.511-.242-.416.242-.387.693-1.287.075-.15.038-.282-.019-.393-.056-.112-.525-1.265-.72-1.736-.19-.459-.383-.396-.525-.403-.135-.007-.29-.009-.444-.009-.155 0-.407.058-.621.288-.213.23-.814.796-.814 1.942 0 1.146.833 2.251.949 2.408.117.156 1.64 2.506 3.976 3.512.556.24 1.0.383 1.34.492.559.178 1.067.153 1.47.093.449-.067 1.47-.6 1.674-1.18.204-.58.204-1.079.143-1.18-.061-.101-.227-.168-.561-.335z"/>
-                </svg>
-                +55 63 9236-4261
-            </a>
-            </p>
-            </div>
-             <a href="https://wa.me/5562995679219"><button style="
-    position: relative;
-    padding: 16px 40px;
-    margin: 20px;                                                  
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, #25d366, #128c7e, #075e54, #25d366);
-    background-size: 400%;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-" 
-onmouseover="this.style.transform='scale(1.05)'" 
-onmouseout="this.style.transform='scale(1)'" 
-onmousedown="this.style.transform='scale(0.98)'" 
-onmouseup="this.style.transform='scale(1.05)'">
-    Quero Criar Meu Site
-</button></a><br><br>
-
             
-            <a href="Salvo.html"><button style="
-    position: relative;
-    padding: 16px 40px;
-    margin: 20px;                                                  
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffffff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    background: linear-gradient(90deg, <a href="https://wa.me/5562995679219"><button style="
+   <a href="https://wa.me/5562995679219"><button style="
     position: relative;
     padding: 16px 40px;
     margin: 20px;                                                  
@@ -657,18 +861,13 @@ onmouseover="this.style.transform='scale(1.05)'"
 onmouseout="this.style.transform='scale(1)'" 
 onmousedown="this.style.transform='scale(0.98)'" 
 onmouseup="this.style.transform='scale(1.05)'">
-   🔒🔒🔒
+   CRIAR MEU SITE
 </button></a>
-            <dev>
-              
-      <p class="Rodape-seguro" style="margin-top: 200px;">🔒 AMBIENTE 100% SEGURO</p>
-              
-            </dev>
-
-
-            
+                        
+      <p class="Rodape-seguro" style="margin-bottom: 10px;">🔒 AMBIENTE 100% SEGURO</p>
+                      
             <div class="admin-botoes-grupo">
-                <button class="btn-admin" id="btnAdmin">
+                <button class="btn-admin" id="btnAdmin" style="margin-bottom: 300px;">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     Admin
                 </button>
@@ -684,22 +883,72 @@ onmouseup="this.style.transform='scale(1.05)'">
             </div>
         </div>
     </div>
+    <div>
+    </div>
+
+    <!-- MODAL FLUTUANTE -->
+    <div class="modal-flutuante" id="modalFlutuante">
+        
+<div class="robot-container">
+    <div class="robot-face">
+        <div class="eyes-container">
+            <div class="eye">
+                <div class="eye-glow"></div>
+            </div>
+            <div class="eye">
+                <div class="eye-glow"></div>
+            </div>
+        </div>
+        <div class="mouth"></div>
+    </div>
+</div>
+          
+        <p style="text-align: center; font-size: 16px;">Numeros Escolidos</p>
+        
+           <div class="numeros-escolhidos" id="modalNumeros-2">--</div>
+           <div class="valor-total" id="modalTotal-2">Total: R$ 0,00</div>
+        
+        <p style="text-align: center; font-size: 14px;">Que bom que escolheu seu número.</p>
+        <p style="font-size: 13px; text-align: center;">Clique abaixo para o:</p>
+        <button class="btn-proximo" style="width: 100%; padding: 10px; font-size: 14px;" id="btnFlutuante">Próximo Passo</button>
+    </div>
 
     <!-- Modal Cadastro / Admin -->
+       
     <div class="modal-overlay" id="modalCadastro">
-        <div class="modal-content">
-            <div class="modal-title" id="modalCadastroTitulo">Dados do Comprador - Número <span id="numSelecionadoTitulo">0</span></div>
+        <div class="modal-content">                    
+            <div class="modal-title" id="modalCadastroTitulo">Dados do Comprador </div>
+            
+            <div><div class="bilhete-container" style="background-color: #fff9db; border-left: 5px solid #fab005; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: sans-serif; max-width: 500px; margin: 20px auto; color: #2b2b2b;">
+    <p style="margin: 0; line-height: 1.5; font-size: 16px;">
+     
+    <div class="aviso-sorteio" style="background-color: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; border-radius: 8px; font-family: sans-serif; max-width: 500px; margin: 20px auto; color: #1b5e20;">
+        <p>Número Escolido:
+        <strong><span id="numSelecionadoTitulo" style="color: red;">00</span><strong>
+        </p>
+    </div>
+            
+    </p>
+    <p style="text-align: center; margin: 10px 0 0 0; font-size: 20px;">
+    </p>
+                <div class="aviso-sorteio" style="background-color: #e8f5e9; border-left: 5px solid #2e7d32; padding: 15px; border-radius: 8px; font-family: sans-serif; max-width: 500px; margin: 20px auto; color: #1b5e20;">
+    <p style="margin: 0; line-height: 1.5; font-size: 16px; text-align: center;">
+        ⏳ O sorteio logo, logo começará...<br> Enquanto isso, nós lhe desejamos <strong>bastante sorte</strong>! 🍀
+    </p>
+    </div>
+
+            
             <div class="modal-body">
                 <div class="form-group" id="grupoNumeroAdmin" style="display: none;">
-                    <label for="numeroAdminInput">Número da Rifa:</label>
+                    <label for="numeroAdminInput">Número do Sorteio:</label>
                     <input type="number" id="numeroAdminInput" min="1" max="500" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="nomeCliente">Nome Completo:</label>
+                    <label for="nomeCliente">Digite seu Nome:</label>
                     <input type="text" id="nomeCliente" placeholder="Digite seu nome">
                 </div>
                 <div class="form-group">
-                    <label for="whatsappCliente">WhatsApp / Informação:</label>
+                    <label for="whatsappCliente">WhatsApp</label>
                     <input type="text" id="whatsappCliente" placeholder="(00) 00000-0000">
                 </div>
             </div>
@@ -710,38 +959,73 @@ onmouseup="this.style.transform='scale(1.05)'">
                 </button>
                 <button class="btn-modal btn-voltar" id="btnCancelarCadastro">Cancelar</button>
                 <button class="btn-modal btn-salvar" id="btnSalvarCadastro">
-                    <span id="txtIconeSalvar"></span> Confirmar Número
+                    <span id="txtIconeSalvar"></span> Confirmar Número<br>
                 </button>
             </div>
+        </div>
+</div>
         </div>
     </div>
 
     <div class="modal-overlay" id="modalConfirmacao">
         <div class="modal-content">
-            <div class="modal-title">Confirmação de Reserva</div>
+            <div class="robot-container" style="display: flex; justify-content: center; align-items: center; min-height: none; width: 100%;">
+    <div class="robot-face">
+        <div class="eyes-container">
+            <div class="eye">
+                <div class="eye-glow"></div>
+            </div>
+            <div class="eye">
+                <div class="eye-glow"></div>
+            </div>
+        </div>
+        <div class="mouth"></div>
+    </div>
+</div>
+
+            <div class="modal-title" style="text-align: center;">Confirmação de Reserva</div>
             <div class="modal-body">
                 <p>Você selecionou os seguintes números:</p>
                 <div class="numeros-escolhidos" id="modalNumeros">--</div>
                 <div class="valor-total" id="modalTotal">Total: R$ 0,00</div>
-                <p style="margin-top: 15px; font-size: 13px; color: #666;">
-                    Chave Pix do Sorteio:<br>
-                    <strong style="color: red;">32865511120</strong><br>
-                    Nome:<br>
-                    <strong style="color: #FF3F1A;">WILSON MARTINS PEREIRA</strong><br>
-                </p>
+                
+                <div style="margin-top: 15px; font-size: 13px; color: #666;">
+                    <p style="text-align: center; color: red; font-size: 20px;"><strong>ATENÇÃO</strong></p>
+                    <p>Ao clicar no botão <span style="background-color: #008060; padding: 3px; border-radius: 3px; font-size: 10px; color: white;">Copia Pix</span>, o PIX do sorteio será copiado e você será direcionado ao WhatsApp com uma mensagem automática com os detalhes do sorteio.</p>
+                    <p>​⚠️ Importante: A mensagem no WhatsApp serve para registrarmos o seu pedido no nosso sistema. Não apague o texto automático antes de enviar!</p>
+              <div class="instrucoes-pix">
+    <h3 style="text-align: center; color: #0d3b66; font-size: 17px;">O que você precisa fazer agora?</h3>
+    <ol>
+        <li>Clicar no botão: <span style="background-color: #008060; padding: 3px; border-radius: 3px; font-size: 10px; color: white;">Copia Pix</span>.</li>
+        <li>Envie a mensagem automatica que foi gerada para nós no WhatsApp.</li>
+        <li>Abra o aplicativo do seu banco e efetue o pagamento utilizando a opção <strong>Pix Copia e Cola</strong>.</li>
+        <li>Enviar o <strong>comprovante de pagamento</strong> para nós no WhatsApp.</li>
+    </ol>
+              </div>
+
+                    
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn-modal btn-voltar" id="btnVoltar">Voltar</button>
-             <!--   <button class="btn-modal btn-copiar-pix" id="btnCopiarPix">Copiar PIX</button>-->
                 <button class="btn-modal btn-pagar" id="btnPagar">Copiar PIX</button>
             </div>
         </div>
     </div>
 
     <script>
+        //Função do top
+                function toggleMenu() {
+            var menu = document.getElementById("menuLinks");
+            if (menu.style.display === "block") {
+                menu.style.display = "none";
+            } else {
+                menu.style.display = "block";
+            }
+                }
+        
         // Estrutura para armazenar os dados dos compradores por número
         let reservas = JSON.parse(localStorage.getItem('rifa_reservas')) || {};
-        // Guarda os dados do primeiro cadastro de forma fixa no dispositivo
         let dadosComprador = JSON.parse(localStorage.getItem('rifa_dados_comprador')) || null;
         
         // Estrutura do Painel Administrativo local
@@ -751,36 +1035,17 @@ onmouseup="this.style.transform='scale(1.05)'">
         const valorPorNumero = 20.00;
         let numeroSendoEditado = null;
 
-        // Lista de números que já foram vendidos e confirmados por você na planilha diretamente
         let numerosVendidosPlanilha = [];
 
-        // ==========================================
-        // TABELA DE LINKS DE PAGAMENTO POR VALOR TOTAL
-        // ==========================================
+        // LINKS DE PAGAMENTO
         const LINKS_PAGAMENTO = {
-            "20.00": "32865511120", //1x20
-            "40.00": "32865511120", //2x20
-            "60.00": "32865511120", //3x20
-            "80.00": "32865511120", //4x20
-            "100.00": "32865511120", //5x20
-            "120.00": "32865511120", //6x20
-            "140.00": "32865511120", //7x20
-            "160.00": "32865511120", //8x20
-            "180.00": "32865511120", //9x20
-            "200.00": "32865511120",  //10x20
-            "220.00": "32865511120", //11x20
-            "240.00": "32865511120",  //12x20
-            "260.00": "32865511120",  //13x20  
-            "280.00": "32865511120",  //14x20
-            "300.00": "32865511120",  //15x20
-            "320.00": "32865511120",  //13x20
-            "340.00": "32865511120",  //17x20
-            "360.00": "32865511120",  //18x20
-            "380.00": "32865511120",  //19x20
-            "400.00": "32865511120"  //20x20
+            "20.00": "32865511120", "40.00": "32865511120", "60.00": "32865511120", "80.00": "32865511120",
+            "100.00": "32865511120", "120.00": "32865511120", "140.00": "32865511120", "160.00": "32865511120",
+            "180.00": "32865511120", "200.00": "32865511120", "220.00": "32865511120", "240.00": "32865511120",
+            "260.00": "32865511120", "280.00": "32865511120", "300.00": "32865511120", "320.00": "32865511120",
+            "340.00": "32865511120", "360.00": "32865511120", "380.00": "32865511120", "400.00": "32865511120"
         };
 
-        // Link CSV de publicação da sua planilha que você informou
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSoBAhPS9a75KBxRp6EVhp1a9uIvUBBQOGQPjBaXXZpJlTGFPFiboJIt3C0gRkcdJBHtuqKByafvTHl/pub?output=csv";
 
         // Elementos da interface
@@ -792,7 +1057,7 @@ onmouseup="this.style.transform='scale(1.05)'">
         const fileUploadInput = document.getElementById('fileUploadInput');
         const txtGridTitulo = document.getElementById('txtGridTitulo');
         
-        // Modal Cadastro
+        // Elementos Modais
         const modalCadastro = document.getElementById('modalCadastro');
         const modalCadastroTitulo = document.getElementById('modalCadastroTitulo');
         const numSelecionadoTitulo = document.getElementById('numSelecionadoTitulo');
@@ -804,48 +1069,79 @@ onmouseup="this.style.transform='scale(1.05)'">
         const btnSalvarCadastro = document.getElementById('btnSalvarCadastro');
         const btnExcluirAdmin = document.getElementById('btnExcluirAdmin');
         const txtIconeSalvar = document.getElementById('txtIconeSalvar');
-
-        // Modal Confirmação
         const modalConfirmacao = document.getElementById('modalConfirmacao');
         const modalNumeros = document.getElementById('modalNumeros');
         const modalTotal = document.getElementById('modalTotal');
         const btnVoltar = document.getElementById('btnVoltar');
-        const btnCopiarPix = document.getElementById('btnCopiarPix');
         const btnPagar = document.getElementById('btnPagar');
 
-        // Função para ler os dados vindos diretamente do link CSV da planilha
+        // Modal Flutuante
+        const modalFlutuante = document.getElementById('modalFlutuante');
+        const btnFlutuante = document.getElementById('btnFlutuante');
+
+                function verificarExibicaoFlutuante() {
+            const numerosSelecionados = Object.keys(reservas).map(Number).sort((a, b) => a - b);
+            if (numerosSelecionados.length > 0) {
+                // Preenche os dados nos elementos do modal flutuante
+                document.getElementById('modalNumeros-2').innerText = numerosSelecionados.join(', ');
+                document.getElementById('modalTotal-2').innerText = `Total: R$ ${(numerosSelecionados.length * valorPorNumero).toFixed(2).replace('.', ',')}`;
+                modalFlutuante.style.display = 'block';
+            } else {
+                modalFlutuante.style.display = 'none';
+            }
+        }
+//🚫🚫🚫
+                // FUNÇÃO PARA COPIAR A CHAVE PIX
+        document.getElementById('btnPagar').addEventListener('click', function() {
+            const numerosSelecionados = Object.keys(reservas).map(Number).sort((a, b) => a - b);
+            const total = numerosSelecionados.length * valorPorNumero;
+            // Pega a chave PIX correspondente ao valor ou usa a padrão
+            const chavePix = LINKS_PAGAMENTO[total.toFixed(2)] || "32865511120";
+
+            // Copia para a área de transferência
+            navigator.clipboard.writeText(chavePix).then(() => {
+                alert("Chave PIX copiada com sucesso!");
+            }).catch(err => {
+                console.error("Erro ao copiar: ", err);
+                // Alternativa caso o navegador bloqueie o clipboard (ex: falta de HTTPS)
+                const inputProvisorio = document.createElement("input");
+                inputProvisorio.value = chavePix;
+                document.body.appendChild(inputProvisorio);
+                inputProvisorio.select();
+                document.execCommand("copy");
+                document.body.removeChild(inputProvisorio);
+                alert("Chave PIX copiada!");
+            });
+        });
+
+        
+
         function carregarDadosDaPlanilha() {
             fetch(SPREADSHEET_CSV_URL)
             .then(response => response.text())
             .then(data => {
                 let linhas = data.split('\n');
                 numerosVendidosPlanilha = [];
-
-                // Passa por cada linha da planilha para verificar o conteúdo da Coluna A
                 linhas.forEach((linha, index) => {
                     let colunas = lineSplit(linha);
                     if (colunas.length >= 1) {
                         let conteudoColunaA = colunas[0].trim();
                         let numeroRifaOcupado = index + 1;
-
                         if (conteudoColunaA !== "") {
                             numerosVendidosPlanilha.push(numeroRifaOcupado);
                         }
                     }
                 });
-
                 gerarGrid();
             })
             .catch(error => {
-                console.error("Erro ao ler dados da planilha publicado em CSV:", error);
+                console.error("Erro ao ler dados da planilha:", error);
                 gerarGrid();
             });
         }
 
-        // Função auxiliar robusta para separar colunas de CSV tratando aspas
         function lineSplit(text) {
-            let p = false, d = [];
-            let r = [''];
+            let p = false, r = [''];
             for (let i=0; i<text.length; i++) {
                 let c = text[i];
                 if (c === '"') { p = !p; }
@@ -855,72 +1151,38 @@ onmouseup="this.style.transform='scale(1.05)'">
             return r;
         }
 
-        // Renderiza a visualização dos botões respeitando o modo ativo e as bases de dados
         function gerarGrid() {
             gridNumeros.innerHTML = "";
-
-            for (let i = 1; i <= 984; i++) {
+            for (let i = 1; i <= 1000; i++) {
                 const botao = document.createElement('button');
                 botao.classList.add('num-btn');
                 botao.innerText = i;
-                botao.type = 'button';
                 botao.id = `btn-num-${i}`;
 
-                // Se houver dados salvos no Admin Local para este respectivo número
                 const temDadosAdmin = reservasAdmin[i] && reservasAdmin[i].nome.trim() !== "" && reservasAdmin[i].whatsapp.trim() !== "";
                 
-                if (temDadosAdmin) {
-                    botao.classList.add('tem-dados');
-                }
+                if (temDadosAdmin) botao.classList.add('tem-dados');
 
                 if (modoAdminAtivo) {
-                    // Modo Admin: Todos os botões ficam acessíveis e interativos para clique
-                    if (reservas[i]) {
-                        botao.classList.add('selecionado');
-                    }
+                    if (reservas[i]) botao.classList.add('selecionado');
                 } else {
-                    // Modo Público: Se cadastrado no admin local com campos preenchidos, fica bloqueado e impossível clicar
-                    if (temDadosAdmin) {
+                    if (temDadosAdmin || numerosVendidosPlanilha.includes(i)) {
                         botao.classList.add('vendido');
                         botao.disabled = true;
                         gridNumeros.appendChild(botao);
-                        if (reservas[i]) {
-                            delete reservas[i];
-                            localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
-                        }
                         continue;
                     }
-
-                    // Se constar como ocupado na planilha externa do Google Docs
-                    if (numerosVendidosPlanilha.includes(i)) {
-                        botao.classList.add('vendido');
-                        botao.disabled = true;
-                        gridNumeros.appendChild(botao);
-                        if (reservas[i]) {
-                            delete reservas[i];
-                            localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
-                        }
-                        continue;
-                    }
-
-                    if (reservas[i]) {
-                        botao.classList.add('selecionado');
-                    }
+                    if (reservas[i]) botao.classList.add('selecionado');
                 }
 
                 botao.addEventListener('click', function() {
                     numeroSendoEditado = i;
-                    
                     if (modoAdminAtivo) {
-                        // Painel Admin: Abre configuração para atribuir ou remover dados de vendas
                         modalCadastroTitulo.innerHTML = `Admin — Configurar Número <span id="numSelecionadoTitulo">${i}</span>`;
                         grupoNumeroAdmin.style.display = 'block';
                         numeroAdminInput.value = i;
-                        
-                        // Se houver dados, o ícone de lápis entra em ação e libera o botão de exclusão
-                        txtIconeSalvar.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
+                        txtIconeSalvar.innerHTML = ''; 
                         btnExcluirAdmin.style.display = temDadosAdmin ? 'inline-flex' : 'none';
-
                         if (reservasAdmin[i]) {
                             nomeCliente.value = reservasAdmin[i].nome;
                             whatsappCliente.value = reservasAdmin[i].whatsapp;
@@ -930,18 +1192,17 @@ onmouseup="this.style.transform='scale(1.05)'">
                         }
                         modalCadastro.style.display = 'flex';
                     } else {
-                        // Fluxo Normal do comprador
                         if (reservas[i]) {
                             delete reservas[i];
                             localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
                             botao.classList.remove('selecionado');
+                            verificarExibicaoFlutuante();
                         } else {
-                            modalCadastroTitulo.innerHTML = `Dados do Comprador - Número <span id="numSelecionadoTitulo">${i}</span>`;
+                            modalCadastroTitulo.innerHTML = `​🚀 Sua Chance Chegou:`;
                             grupoNumeroAdmin.style.display = 'none';
                             btnExcluirAdmin.style.display = 'none';
                             txtIconeSalvar.innerHTML = '';
                             numSelecionadoTitulo.innerText = i;
-
                             if (dadosComprador) {
                                 nomeCliente.value = dadosComprador.nome;
                                 whatsappCliente.value = dadosComprador.whatsapp;
@@ -949,23 +1210,19 @@ onmouseup="this.style.transform='scale(1.05)'">
                                 nomeCliente.value = '';
                                 whatsappCliente.value = '';
                             }
-                            
                             modalCadastro.style.display = 'flex';
                         }
                     }
                 });
-
                 gridNumeros.appendChild(botao);
             }
+            verificarExibicaoFlutuante();
         }
 
-        // Ação do Botão Admin com Validação de Senha
         btnAdmin.addEventListener('click', function() {
             if (modoAdminAtivo) {
                 modoAdminAtivo = false;
                 document.body.classList.remove('admin-mode');
-                txtGridTitulo.innerText = "Selecione os seus números abaixo:";
-                btnAdmin.style.background = "#6c757d";
                 btnAdmin.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Admin`;
                 btnBackup.style.display = 'none';
                 btnUpload.style.display = 'none';
@@ -975,185 +1232,82 @@ onmouseup="this.style.transform='scale(1.05)'">
                 if (senha === "Rif@D") {
                     modoAdminAtivo = true;
                     document.body.classList.add('admin-mode');
-                    txtGridTitulo.innerText = "PAINEL ADMIN ATIVO — Clique em um número para Editar/Excluir";
-                    btnAdmin.style.background = "#008060";
                     btnAdmin.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Sair do Admin`;
                     btnBackup.style.display = 'inline-flex';
                     btnUpload.style.display = 'inline-flex';
                     gerarGrid();
-                } else if (senha !== null) {
-                    alert("Senha incorreta!");
                 }
             }
-        });
-
-        // Backup dos dados do Admin para arquivo JSON
-        btnBackup.addEventListener('click', function() {
-            const dadosStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(reservasAdmin, null, 2));
-            const downloadAnchor = document.createElement('a');
-            downloadAnchor.setAttribute("href", dadosStr);
-            downloadAnchor.setAttribute("download", "backup_rifa_admin.json");
-            document.body.appendChild(downloadAnchor);
-            downloadAnchor.click();
-            downloadAnchor.remove();
-        });
-
-        // Disparador do upload de arquivo JSON
-        btnUpload.addEventListener('click', function() {
-            fileUploadInput.click();
-        });
-
-        // Processa o upload do arquivo de backup
-        fileUploadInput.addEventListener('change', function(e) {
-            const arquivo = e.target.files[0];
-            if (!arquivo) return;
-
-            const leitor = new FileReader();
-            leitor.onload = function(event) {
-                try {
-                    const dadosCarregados = JSON.parse(event.target.result);
-                    if (typeof dadosCarregados === 'object' && dadosCarregados !== null) {
-                        reservasAdmin = dadosCarregados;
-                        localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
-                        alert('Backup restaurado com sucesso!');
-                        gerarGrid();
-                    } else {
-                        alert('Formato de arquivo inválido.');
-                    }
-                } catch(err) {
-                    alert('Erro ao processar o arquivo JSON.');
-                }
-            };
-            leitor.readAsText(arquivo);
-            fileUploadInput.value = ''; // Limpa o input
-        });
-
-        // Eventos do Modal de Cadastro
-        btnCancelarCadastro.addEventListener('click', function() {
-            modalCadastro.style.display = 'none';
-            numeroSendoEditado = null;
         });
 
         btnSalvarCadastro.addEventListener('click', function() {
             const nome = nomeCliente.value.trim();
             const whatsapp = whatsappCliente.value.trim();
-
-            if (!nome || !whatsapp) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-
+            if (!nome || !whatsapp) return;
             if (modoAdminAtivo) {
                 const novoNumero = parseInt(numeroAdminInput.value);
-                if (isNaN(novoNumero) || novoNumero < 1 || novoNumero > 500) {
-                    alert('Número inválido! Escolha de 1 a 500.');
-                    return;
-                }
-                
                 reservasAdmin[novoNumero] = { nome: nome, whatsapp: whatsapp };
                 localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
             } else {
                 dadosComprador = { nome: nome, whatsapp: whatsapp };
                 localStorage.setItem('rifa_dados_comprador', JSON.stringify(dadosComprador));
-
                 reservas[numeroSendoEditado] = { nome: nome, whatsapp: whatsapp };
                 localStorage.setItem('rifa_reservas', JSON.stringify(reservas));
             }
-            
             modalCadastro.style.display = 'none';
-            numeroSendoEditado = null;
             gerarGrid();
         });
 
-        // Evento Excluir Reserva no Painel Admin (Ícone de lixeira)
-        btnExcluirAdmin.addEventListener('click', function() {
-            if (confirm(`Tem certeza que deseja apagar os dados do número ${numeroSendoEditado}?`)) {
-                if (reservasAdmin[numeroSendoEditado]) {
-                    delete reservasAdmin[numeroSendoEditado];
-                    localStorage.setItem('rifa_reservas_admin', JSON.stringify(reservasAdmin));
-                }
-                modalCadastro.style.display = 'none';
-                numeroSendoEditado = null;
-                gerarGrid();
-            }
-        });
-
-        // Ação do botão Próximo Passo
-        btnProximo.addEventListener('click', function() {
-            const numerosSelecionados = Object.keys(reservas).map(Number);
-
-            if (numerosSelecionados.length === 0) {
-                alert('Por favor, selecione e cadastre pelo menos um número.');
-                return;
-            }
-
-            numerosSelecionados.sort((a, b) => a - b);
-            modalNumeros.innerText = numerosSelecionados.join(', ');
-            
-            const total = numerosSelecionados.length * valorPorNumero;
-            modalTotal.innerText = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
-
-            modalConfirmacao.style.display = 'flex';
-        });
-
-        // Fechar Modal de Confirmação
-        btnVoltar.addEventListener('click', function() {
-            modalConfirmacao.style.display = 'none';
-        });
-
-        // Função interna para processar o envio do Whatsapp e cópia do pix
-        function finalizarEEnviar() {
-            navigator.clipboard.writeText("32865511120").catch(err => {
-                console.error("Erro ao copiar PIX automaticamente: ", err);
-            });
-
+        function abrirModalConfirmacao() {
             const numerosSelecionados = Object.keys(reservas).map(Number).sort((a, b) => a - b);
-            const total = numerosSelecionados.length * valorPorNumero;
-            const totalChave = total.toFixed(2);
-            
-            const linkPagamentoExato = LINKS_PAGAMENTO[totalChave] || "Link de pagamento não configurado para este valor.";
+            if (numerosSelecionados.length === 0) return;
+            modalNumeros.innerText = numerosSelecionados.join(', ');
+            modalTotal.innerText = `Total: R$ ${(numerosSelecionados.length * valorPorNumero).toFixed(2).replace('.', ',')}`;
+            modalConfirmacao.style.display = 'flex';
+        }
 
-            const primeiroNumero = numerosSelecionados[0];
-            const nomeComprador = reservas[primeiroNumero]?.nome || dadosComprador?.nome || "";
-            const whatsComprador = reservas[primeiroNumero]?.whatsapp || dadosComprador?.whatsapp || "";
+        btnProximo.addEventListener('click', abrirModalConfirmacao);
+        btnFlutuante.addEventListener('click', abrirModalConfirmacao);
 
-            let textoWhatsapp = `Administração: Desde agora nós organizadores agradece a sua participação\n\n`;
+        btnCancelarCadastro.addEventListener('click', () => modalCadastro.style.display = 'none');
+        btnVoltar.addEventListener('click', () => modalConfirmacao.style.display = 'none');
+        
+        btnPagar.addEventListener('click', function() {
+    const numerosSelecionados = Object.keys(reservas).map(Number).sort((a, b) => a - b);
+    const total = numerosSelecionados.length * valorPorNumero;
+    
+    // ABAIXO AS LINHAS QUE VOCÊ DEVE ADICIONAR:
+    const dadosSalvos = JSON.parse(localStorage.getItem('rifa_dados_comprador'));
+    const nomeComprador = dadosSalvos ? dadosSalvos.nome : "Não informado";
+    const whatsComprador = dadosSalvos ? dadosSalvos.whatsapp : "Não informado";
+    const linkPagamentoExato = LINKS_PAGAMENTO[total.toFixed(2)] || "32865511120";
+        
+    let textoWhatsapp = `Administração: Desde agora nós organizadores agradece a sua participação\n\n`;
             textoWhatsapp += `👤 *Nome:* ${nomeComprador}\n`;
             textoWhatsapp += `📱 *WhatsApp:* ${whatsComprador}\n\n`;
             textoWhatsapp += `🔢 *Números Escolhidos:* ${numerosSelecionados.join(', ')}\n`;
             textoWhatsapp += `💰 *Valor Total:* R$ ${total.toFixed(2).replace('.', ',')}\n\n`;
             textoWhatsapp += `🔗 *Pix para Pagamento:* ${linkPagamentoExato}\n\n`;
-            textoWhatsapp += `*Nome do Pix:* WILSON MARTINS PEREIRA\n`;
-            textoWhatsapp += `Pague com o Pix ☝️👆\n\n`;
-            textoWhatsapp += `Por favor, nos enviar o comprovante aqui mesmo para valide seu números!`;
+            textoWhatsapp += `*Nome do Pix:* WILSON MARTINS PEREIRA\n\n`;
+            textoWhatsapp += `🔻🔻🔻🔻🔻🔻🔻🔻🔻\n\n`;
+            textoWhatsapp += `Por favor, nos enviar o comprovante aqui mesmo para validar seus números!`;
             textoWhatsapp += `Em caso de dúvidas o contato do beneficiário abaixo.\n\n`;
             textoWhatsapp += `*Contato do Beneficiado:*\n\n`;
-            textoWhatsapp += `*WILSON MARTINS PEREIRA\n\n`;
-            textoWhatsapp += `*CONTAT0: 55 63 92364261\n\n`;
+            textoWhatsapp += `*WILSON MARTINS PEREIRA*\n\n`;
+            textoWhatsapp += `*CONTAT0:* 55 63 92364261\n\n`;
             textoWhatsapp += `____________________________\n\n`;
             textoWhatsapp += `*CLICA EM ENVIAR MENSAGEM AUTOMATICA*\n\n`;
             textoWhatsapp += `👉👉👉👉👉👉\n\n`;
 
-            const textoCodificado = encodeURIComponent(textoWhatsapp);
-            const numeroDestino = "556291740699";
-
-            const urlFinalWhatsapp = `https://api.whatsapp.com/send?phone=${numeroDestino}&text=${textoCodificado}`;
-
-            window.open(urlFinalWhatsapp, '_blank');
-
+        
+            window.open(`https://api.whatsapp.com/send?phone=556291740699&text=${encodeURIComponent(textoWhatsapp)}`, '_blank');
             modalConfirmacao.style.display = 'none';
-        }
-
-        // Ação do botão Copiar PIX
-        btnPagar.addEventListener('click', function() {
-            finalizarEEnviar();
         });
 
-        // Inicializa a página carregando os dados da planilha antes de tudo
         carregarDadosDaPlanilha();
-
-        // Executa a função carregarDadosDaPlanilha a cada 30 segundos de forma automatizada
         setInterval(carregarDadosDaPlanilha, 30000);
     </script>
 </body>
 </html>
+
+    
