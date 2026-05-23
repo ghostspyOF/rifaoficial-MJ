@@ -1038,7 +1038,7 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                     let conteudo = dadosColunas[1].replace(/['"]/g, '').trim();
 
                     // --- CONFIGURAÇÃO: QUANTIDADE DE NÚMEROS ---
-                    if (idElemento === "CONFIG_QUANTIDADE_NUMEROS") {
+                    if (idElemento === "1000") {
                         window.quantidadeNumerosSorteio = parseInt(conteudo, 10) || 1000;
                         console.log(`Sucesso: Quantidade de números definida para: ${window.quantidadeNumerosSorteio}`);
                         
