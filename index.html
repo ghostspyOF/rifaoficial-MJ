@@ -1046,7 +1046,7 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
                     }
 
                     // --- CONFIGURAÇÃO: VALOR POR NÚMERO (TEM QUE SER assim n PLnilha: CONFIG_VALOR_NUMERO) ---
-                    if (idElemento === "22") {
+                    if (idElemento === "CONFIG_VALOR_NUMERO") {
                         const valorLimpo = conteudo.replace(',', '.');
                         // Atualiza diretamente a variável usada nas suas contas matemágicas
                         valorPorNumero = parseFloat(valorLimpo) || 20.00;
@@ -1055,7 +1055,7 @@ window.chavePixPlanilha = "ErroAoCopiar"; // Chave PIX padrão de segurança cas
                     }
 
                     // --- CONFIGURAÇÃO: CHAVE PIX (TEM QUE SER assim n PLnilha: CONFIG_CHAVE_PIX) ---
-                    if (idElemento === "23") {
+                    if (idElemento === "CONFIG_CHAVE_PIX") {
                         window.chavePixPlanilha = conteudo;
                         console.log(`Sucesso: Chave PIX definida para: ${window.chavePixPlanilha}`);
                         return;
