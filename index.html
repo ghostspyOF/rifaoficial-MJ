@@ -1038,7 +1038,7 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                     let conteudo = dadosColunas[1].replace(/['"]/g, '').trim();
 
                     // --- CONFIGURAÇÃO: QUANTIDADE DE NÚMEROS ---
-                    if (idElemento === "20") {
+                    if (idElemento === "21") {
                         window.quantidadeNumerosSorteio = parseInt(conteudo, 10) || 1000;
                         console.log(`Sucesso: Quantidade de números definida para: ${window.quantidadeNumerosSorteio}`);
                         
@@ -1048,8 +1048,8 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                         return; 
                     }
 
-                    // --- CONFIGURAÇÃO: VALOR POR NÚMERO (NOVO ID) ---
-                    if (idElemento === "CONFIG_VALOR_NUMERO") {
+                    // --- CONFIGURAÇÃO: VALOR POR NÚMERO (TEM QUE SER assim n PLnilha: CONFIG_VALOR_NUMERO) ---
+                    if (idElemento === "22") {
                         const valorLimpo = conteudo.replace(',', '.');
                         // Atualiza diretamente a variável usada nas suas contas matemágicas
                         valorPorNumero = parseFloat(valorLimpo) || 20.00;
@@ -1057,8 +1057,8 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                         return;
                     }
 
-                    // --- CONFIGURAÇÃO: CHAVE PIX (NOVO ID) ---
-                    if (idElemento === "21") {
+                    // --- CONFIGURAÇÃO: CHAVE PIX (TEM QUE SER assim n PLnilha: CONFIG_CHAVE_PIX) ---
+                    if (idElemento === "23") {
                         window.chavePixPlanilha = conteudo;
                         console.log(`Sucesso: Chave PIX definida para: ${window.chavePixPlanilha}`);
                         return;
