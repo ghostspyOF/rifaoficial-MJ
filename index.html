@@ -1038,7 +1038,7 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                     let conteudo = dadosColunas[1].replace(/['"]/g, '').trim();
 
                     // --- CONFIGURAÇÃO: QUANTIDADE DE NÚMEROS ---
-                    if (idElemento === "1000") {
+                    if (idElemento === "20") {
                         window.quantidadeNumerosSorteio = parseInt(conteudo, 10) || 1000;
                         console.log(`Sucesso: Quantidade de números definida para: ${window.quantidadeNumerosSorteio}`);
                         
@@ -1058,7 +1058,7 @@ window.chavePixPlanilha = "32865511120"; // Chave PIX padrão de segurança caso
                     }
 
                     // --- CONFIGURAÇÃO: CHAVE PIX (NOVO ID) ---
-                    if (idElemento === "CONFIG_CHAVE_PIX") {
+                    if (idElemento === "21") {
                         window.chavePixPlanilha = conteudo;
                         console.log(`Sucesso: Chave PIX definida para: ${window.chavePixPlanilha}`);
                         return;
