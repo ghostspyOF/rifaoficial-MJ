@@ -455,7 +455,7 @@
     z-index: 3;
     text-transform: uppercase;
   ">
-    IMPERDIVEL
+    IMPERDÍVEL
   </h3>
     
     <div style="background: #111; border: 2px solid #ffc107; border-radius: 10px; padding: 15px; text-align: center; margin: 20px auto; max-width: 320px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.2);">
@@ -634,12 +634,12 @@
     </div>
     
     <div class="form-group">
-        <label for="nome">Nome do Participante:</label>
-        <input type="text" id="nome" placeholder="Digite o nome completo">
+        <label for="nome">Seu Primeiro Nome</label>
+        <input type="text" id="nome" placeholder="Digite o nome">
     </div>
     <div class="form-group">
         <label for="whatsapp">WhatsApp (com DDD):</label>
-        <input type="tel" id="whatsapp" placeholder="Ex: 11999999999">
+        <input type="tel" id="whatsapp" placeholder="Ex: 62 995679219">
     </div>
         <div class="form-group">
         <label for="qtd">Quantidade de Cotas <span style="font-size: 10px; color: red;">(Mín 10 / Máx 300)</span>:</label>
@@ -655,7 +655,8 @@
     </div>
 </div>
 
-<script>
+
+   <script>
     // Configurações das URLs
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTtZQeMAZAdMxxvTLz7YTYylYbu2tSwwANB1Braq_vyrs3_ersG3r1R7qxfdMxfG3YbJzl0Vgakfm1o/pub?output=csv";
     const scriptUrl = "https://script.google.com/macros/s/AKfycbzfGwB7xe1k7T-qivwnmi3fAz_QUBgNrcRItnVX-EXz-_OmvDVgwWJYH9Eeo2buFy_4Pw/exec";
@@ -701,13 +702,18 @@
         return numero;
     }
 
-    
+    // FUNÇÃO CORRIGIDA ENTRANDO AQUI:
+    function gerarCotas() {
+        const nome = document.getElementById('nome').value.trim();
+        const whatsapp = document.getElementById('whatsapp').value.trim();
+        const qtd = parseInt(document.getElementById('qtd').value);
+
         if (!nome || !whatsapp) {
             alert("Por favor, preencha o Nome e o WhatsApp.");
             return;
         }
         if (qtd < 10 || qtd > 300) {  //Quantidade minha 10 e maxima 300
-            alert("Você pode gerar de 10 a 100 cotas por vez.");
+            alert("Você pode gerar de 10 a 300 cotas por vez.");
             return;
         }
 
@@ -726,7 +732,7 @@
             listaDiv.appendChild(span);
         }
 
-                document.getElementById('results').style.display = 'block';
+        document.getElementById('results').style.display = 'block';
         document.getElementById('btnConfirm').style.display = 'block';
         
         // Rola suavemente até o botão Confirmar e Finalizar
@@ -743,10 +749,10 @@
         btnConfirm.disabled = true;
 
         const payload = {
-    nome: nome,
-    whatsapp: whatsapp, // Enviando o whatsapp separado para o script juntar na coluna A
-    cotas: cotasGeradas
-};
+            nome: nome,
+            whatsapp: whatsapp, // Enviando o whatsapp separado para o script juntar na coluna A
+            cotas: cotasGeradas
+        };
 
 
         try {
@@ -767,8 +773,7 @@
             const valorTotal = (cotasGeradas.length * precoPorCota).toFixed(2).replace('.', ',');
 
             // Prepara a mensagem do WhatsApp com o valor total
-            const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n
-            *Quantidade:* ${cotasGeradas.length} cotas\n*Total:* R$ ${valorTotal}\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
+            const textoMensagem = `Olá ${nome}! Suas cotas foram geradas com sucesso.\n\n*Quantidade:* ${cotasGeradas.length} cotas\n*Total:* R$ ${valorTotal}\n\n*Cotas:* \n${cotasGeradas.join('\n')}`;
             const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
    
             // Redireciona para o WhatsApp
@@ -783,16 +788,16 @@
     }
 
     // Inicializa carregando os dados do CSV
-        // Função para preencher automaticamente a quantidade ao clicar no botão rápido
-        function selecionarRapido(quantidade) {
-        document.getElementById('qtd').value = quantidade;
+    // Função para preencher automaticamente a quantidade ao clicar no botão rápido
+    function selecionarRapido(quantidade) {
+        document.getElementById('qtd').value = quantity = quantidade;
         // Rola suavemente até o campo de nome
         document.getElementById('nome').scrollIntoView({ behavior: 'smooth' });
     }
 
     carregarNumerosExistentes();
     
-        // Função para abrir e fechar o menu modal lateral
+    // Função para abrir e fechar o menu modal lateral
     function toggleMenu(open) {
         const modal = document.getElementById('menuModal');
         const overlay = document.getElementById('menuOverlay');
@@ -807,44 +812,41 @@
     }
     
     function iniciarCronometro() {
-    const duracaoTotal = 4 * 60 * 60 * 1000; // <--- ALTERADO PARA 4 HORAS coloca o 4
-    let horarioFinal = localStorage.getItem('cronometro_oferta_4h'); // <--- Nome atualizado com o _4h no final
+        const duracaoTotal = 4 * 60 * 60 * 1000; // <--- ALTERADO PARA 7 HORAS
+        let horarioFinal = localStorage.getItem('cronometro_oferta_4h'); // <--- Nome atualizado
 
-    if (!horarioFinal) {
-        horarioFinal = Date.now() + duracaoTotal;
-        localStorage.setItem('cronometro_oferta_4h', horarioFinal); // <--- Nome atualizado com o _4h no final
+        if (!horarioFinal) {
+            horarioFinal = Date.now() + duracaoTotal;
+            localStorage.setItem('cronometro_oferta_4h', horarioFinal); // <--- Nome atualizado
+        }
+
+        const x = setInterval(function() {
+            const agora = Date.now();
+            const distancia = horarioFinal - agora;
+
+            let horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
+            let segundos = Math.floor((distancia % (1000 * 60)) / 1000);
+
+            horas = horas < 10 ? "0" + horas : horas;
+            minutos = minutos < 10 ? "0" + minutos : minutos; // <--- CORRIGIDO AQUI TAMBÉM
+            segundos = segundos < 10 ? "0" + segundos : segundos;
+
+            const display = document.getElementById("countdown");
+            if (display) {
+                display.innerHTML = horas + ":" + minutos + ":" + segundos;
+            }
+
+            if (distancia < 0) {
+                clearInterval(x);
+                localStorage.removeItem('cronometro_oferta_4h'); // <--- Nome atualizado
+                iniciarCronometro(); // Reinicia o ciclo de 7 horas
+            }
+        }, 1000);
     }
 
-    const x = setInterval(function() {
-        const agora = Date.now();
-        const distancia = horarioFinal - agora;
-
-        let horas = Math.floor((distancia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutos = Math.floor((distancia % (1000 * 60 * 60)) / (1000 * 60));
-        let segundos = Math.floor((distancia % (1000 * 60)) / 1000);
-
-        horas = horas < 10 ? "0" + horas : horas;
-        minutos = minutos < 10 ? "0" + minutes : minutos;
-        segundos = segundos < 10 ? "0" + segundos : segundos;
-
-        const display = document.getElementById("countdown");
-        if (display) {
-            display.innerHTML = horas + ":" + minutos + ":" + segundos;
-        }
-
-        if (distancia < 0) {
-            clearInterval(x);
-            localStorage.removeItem('cronometro_oferta_7h'); // <--- Nome atualizado
-            iniciarCronometro(); // Reinicia o ciclo de 7 horas
-        }
-    }, 1000);
-}
-
-// Executa a função
-iniciarCronometro();
-
-
-
+    // Executa a função
+    iniciarCronometro();
 </script>
 
 </body>
