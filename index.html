@@ -19,7 +19,7 @@
             padding: 0 !important;
         }
     
-        /* ==========================================
+   /* ==========================================
    CÓDIGO NOVO CORRIGIDO E RESPONSIVO
    ========================================== */
 
@@ -686,7 +686,7 @@
         <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(60)">60 Cotas <span>R$ 30,00</span></button>
         <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(70)">70 Cotas <span>R$ 35,00</span></button>
         <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(80)">80 Cotas <span>R$ 40,00</span></button>
-        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(300)"><span style="color: red; cont-size: 40px;">😍 DESCONTO 😍</span>300 Cotas <span>R$ 140,00</span></button>
+        <button type="button" class="btn-fast" style="grid-column: span 2;" onclick="selecionarRapido(300)"><span style="color: red; font-size: 20px;">😍 DESCONTO 😍</span>300 Cotas <span>R$ 140,00</span></button>
     </div>
     
     <div class="form-group">
@@ -833,9 +833,22 @@ const listaLinksPagamento = {
     "140,00": "LINK_DE_PAGAMENTO_ILUSTRATIVO_DE_140_REAIS"
 };
 
-// Calcula o valor total e formata como texto (Ex: "7,50")
-const valorTotal = (cotasGeradas.length * precoPorCota).toFixed(2).replace('.', ',');
+            // Calcula o valor padrão (sem desconto)
+let valorCalculado = cotasGeradas.length * precoPorCota;
 
+// CONFIGURAÇÃO DE DESCONTOS: Adicione novas regras aqui embaixo
+if (cotasGeradas.length === 300) {
+    valorCalculado = 140.00; // 300 cotas por R$ 140
+} else if (cotasGeradas.length === 200) {
+//    valorCalculado = 95.00;  // Exemplo: 200 cotas por R$ 95
+//} else if (cotasGeradas.length === 100) {
+//    valorCalculado = 48.00;  // Exemplo: 100 cotas por R$ 48
+// Você pode copiar e colar a linha do "else if" para quantas opções quiser
+}
+            
+const valorTotal = valorCalculado.toFixed(2).replace('.', ',');
+
+            
 // Busca o link correspondente na lista. Se não achar, usa um link padrão para digitar o valor que quer.
 const linkPagamento = listaLinksPagamento[valorTotal] || "https://mpago.la/LINK_PADRAO_CASO_NAO_ENCONTRE";
 
@@ -848,7 +861,8 @@ const textoMensagem = `Olá, ${nome}! \n\n
             *Link de Pagamento:* ${linkPagamento}\n\n
             *Chave Pik:* 62 995679219\n
             *NOME:* Mayckon Jhonatas\n\n
-            *Cotas:* \n${cotasGeradas.join(' - ')}`;
+            *Cotas:* \n${cotasGeradas.join(' - ')}\n\n
+            *Clique para nos enviar: 👉*`;
 const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
 
             // Redireciona para o WhatsApp
