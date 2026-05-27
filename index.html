@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -26,38 +27,67 @@
             }
         }
     </script>
-    <style type="text/tailwindcss">
+           <style type="text/tailwindcss">
         @layer utilities {
-            .content-auto {
-                content-visibility: auto;
+            /* Ícones */
+            .fa-bars, .fa-soccer-ball-o { 
+                display: inline-block !important; 
             }
-            .card-shadow {
-                box-shadow: 0 8px 24px rgba(22, 93, 255, 0.12);
+            
+            /* CLASSE DA SUA LOGO: Controla tamanho e as 4 pontas */
+            .logo-header {
+                height: 46px;          /* Altura exata da imagem */
+                width: auto;           /* Largura automática para não amassar */
+                object-fit: contain;   /* Garante que a imagem caiba perfeita no espaço */
+                
+                /* 4 Pontas Diferentes (topo-esq | topo-dir | baixo-dir | baixo-esq) */
+                border-radius: 1px 25px 1px 25px; 
             }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            }
-            .bg-gradient {
-                background: linear-gradient(135deg, #165DFF 0%, #36BFFA 100%);
-            }
+
+            /* Suas classes originais mantidas */
+            .content-auto { content-visibility: auto; }
+            .card-shadow { box-shadow: 0 8px 24px rgba(22, 93, 255, 0.12); }
+            .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+            .bg-gradient { background: linear-gradient(135deg, #165DFF 0%, #36BFFA 100%); }
         }
+
     </style>
 </head>
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
-    <header class="bg-gradient py-6 px-4 shadow-lg">
-        <div class="container mx-auto">
-            <h1 class="text-white text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-center text-shadow flex items-center justify-center gap-3">
-                <i class="fa fa-ticket"></i>
-                SORTEIO PRÊMIO FACIL
-            </h1>
-            <p class="text-white/90 text-center mt-2 max-w-2xl mx-auto">
-                100% TRANSPARENTE
-            </p>
-            <div class="mt-4 text-center">
-                <p class="text-white font-medium">Valor por cota: <span class="font-bold text-yellow-300">R$ 0,30</span></p>
+        <header class="bg-[#0b4883] py-3 px-4 border-b-4 border-[#e1cc1e] relative shadow-md">
+        <div class="container mx-auto flex items-center justify-between">
+            
+            <div class="flex items-center">
+                <img src="86067.jpg" alt="Prêmio Fácil Logo" class="logo-header bg-white p-0.5">
             </div>
+
+            <div class="text-white font-bold text-lg md:text-2xl flex items-center gap-2 text-shadow uppercase">
+                <i class="fa fa-soccer-ball-o"></i>
+                <span>Prêmio Fácil</span>
+                <i class="fa fa-trophy"></i>
+            </div>
+
+            <div class="relative">
+                <button id="menuBtn" class="text-[#00b42a] text-3xl focus:outline-none hover:opacity-80 transition-all pt-1">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <div id="menuCard" class="hidden absolute right-0 mt-3 bg-white p-3 rounded-xl shadow-2xl border border-gray-100 z-50 flex flex-col gap-1.5 min-w-[160px]">
+                    <button onclick="alert('Regras do sorteio')" class="w-full text-left px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-light rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa fa-book text-primary"></i> Regras
+                    </button>
+                    <button onclick="alert('Ver meus números')" class="w-full text-left px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-light rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa fa-list text-primary"></i> Meus Números
+                    </button>
+                    <button onclick="alert('Chamar suporte')" class="w-full text-left px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-light rounded-lg transition-all flex items-center gap-2">
+                        <i class="fa fa-comments text-primary"></i> Suporte
+                    </button>
+                </div>
+            </div>
+
         </div>
     </header>
+
 
     <main class="container mx-auto px-4 py-8 flex-grow">
         <div class="max-w-2xl mx-auto">
@@ -134,7 +164,6 @@
                             <h3 class="text-xl font-bold text-success">Cotas Geradas com Sucesso!</h3>
                         </div>
                         
-                        <!-- Lista em COLUNA UM EMBAIXO DA OUTRA -->
                         <div id="listaNumeros" class="flex flex-col gap-2 mb-4">
                         </div>
 
@@ -142,7 +171,6 @@
                             <p class="text-gray-700 font-medium">Valor total a pagar: <span id="valorFinal" class="font-bold text-success text-xl">R$ 0,00</span></p>
                         </div>
 
-                        <!-- BOTÃO ENVIAR PARA WHATSAPP -->
                         <button 
                             id="enviarWhatsappBtn"
                             class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg text-lg transition-all flex items-center justify-center gap-2"
@@ -176,21 +204,14 @@
                         <i class="fa fa-check text-success mt-1"></i>
                         <span>Valor de cada cota é R$ 0,30</span>
                     </li>
+                    
                     <li class="flex items-start gap-2">
                         <i class="fa fa-check text-success mt-1"></i>
-                        <span>Só pega os números da COLUNA B da planilha</span>
+                        <span>Os números aparecem um embaixo do outro</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <i class="fa fa-check text-success mt-1"></i>
-                        <span>Só mostra números que NÃO existem na planilha</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i class="fa fa-check text-success mt-1"></i>
-                        <span>Números aparecem um embaixo do outro</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i class="fa fa-check text-success mt-1"></i>
-                        <span>Botão para enviar todas diretamente no seu WhatsApp</span>
+                        <span>Basta clicar no botão para enviar todas as cotas sorteadas para você diretamente para mim no WhatsApp</span>
                     </li>
                 </ul>
             </div>
@@ -203,7 +224,7 @@
         </div>
     </footer>
 
-        <script>
+    <script>
         // URL da planilha
         const PLANILHA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTtZQeMAZAdMxxvTLz7YTYylYbu2tSwwANB1Braq_vyrs3_ersG3r1R7qxfdMxfG3YbJzl0Vgakfm1o/pub?output=csv';
         const VALOR_POR_COTA = 0.30; // Valor fixo por cota
@@ -218,7 +239,7 @@
         const gerarBtn = document.getElementById('gerarBtn');
         const carregandoEl = document.getElementById('carregando');
         const resultadoEl = document.getElementById('resultado');
-        const sucessoEl = document.getElementById('sucesso');
+        const sucessoEl = document.getElementById('sucesso'); // CORRIGIDO AQUI
         const erroEl = document.getElementById('erro');
         const listaNumerosEl = document.getElementById('listaNumeros');
         const quantidadeInput = document.getElementById('quantidade');
@@ -265,7 +286,7 @@
                 const textoCsv = await resposta.text();
                 processarCsv(textoCsv);
                 dadosCarregados = true;
-                console.log('Total de números:', numerosExistentes.length);
+                console.log('Total de números proibidos carregados:', numerosExistentes.length);
             } catch (erro) {
                 console.error('Erro:', erro);
                 textoErroEl.textContent = 'Não foi possível carregar os dados.';
@@ -276,32 +297,35 @@
             }
         }
 
-        // Processa CSV - PEGA SOMENTE A COLUNA B e limpa caracteres invisíveis
+        // Processa CSV - MODIFICADO PARA LER AS COLUNAS B, C, D e E
         function processarCsv(textoCsv) {
-            // Divide por quebra de linha removendo o \r oculto do Windows
             const linhas = textoCsv.replace(/\r/g, '').trim().split('\n');
             numerosExistentes = [];
 
             linhas.forEach((linha) => {
                 if (!linha) return;
 
-                // Detecta se o separador é vírgula ou ponto e vírgula
                 const separador = linha.includes(';') ? ';' : ',';
                 const colunas = linha.split(separador);
                 
-                // PEGA SOMENTE A COLUNA B (índice 1)
-                let colunaB = colunas[1] ? colunas[1].trim() : '';
+                // Array com os índices correspondentes: B=1, C=2, D=3, E=4
+                const indicesColunas = [1, 2, 3, 4];
 
-                // Remove aspas que o CSV às vezes adiciona em volta de textos/números
-                colunaB = colunaB.replace(/^"|"$/g, '');
+                indicesColunas.forEach((indice) => {
+                    // Prevenção caso a linha seja mais curta que as colunas solicitadas
+                    let valorColuna = colunas[indice] ? colunas[indice].trim() : '';
+                    
+                    // Remove aspas extras do formato CSV
+                    valorColuna = valorColuna.replace(/^"|"$/g, '');
 
-                // Pega apenas números de 7 dígitos da coluna B
-                if (colunaB.length === 7 && !isNaN(colunaB)) {
-                    numerosExistentes.push(colunaB);
-                }
+                    // Se possuir 7 dígitos e for número, adiciona na lista de proibidos
+                    if (valorColuna.length === 7 && !isNaN(valorColuna)) {
+                        numerosExistentes.push(valorColuna);
+                    }
+                });
             });
 
-            // Remove duplicatas por segurança
+            // Remove duplicatas por otimização
             numerosExistentes = [...new Set(numerosExistentes)];
         }
 
@@ -310,49 +334,44 @@
             return Math.floor(1000000 + Math.random() * 9000000).toString();
         }
 
-        // Verifica se existe na lista
+        // Verifica se existe na lista (Proibido repetir)
         function numeroExiste(numero) {
             return numerosExistentes.includes(numero);
         }
 
         // Função principal
         async function gerarEVerificar() {
-            // Limpa o layout antes de começar
             resultadoEl.classList.add('hidden');
             sucessoEl.classList.add('hidden');
             erroEl.classList.add('hidden');
             listaNumerosEl.innerHTML = '';
-            numerosGeradosLista = []; // Limpa a lista para WhatsApp
+            numerosGeradosLista = [];
             carregandoEl.classList.remove('hidden');
             gerarBtn.disabled = true;
             gerarBtn.classList.add('opacity-70');
 
             try {
-                // Se deu erro antes ou ainda não carregou, tenta carregar agora
                 if (!dadosCarregados) {
                     await carregarDadosPlanilha();
                 }
 
-                // Se mesmo assim falhar, interrompe
                 if (!dadosCarregados) {
                     throw new Error('Dados indisponíveis (ERRO).');
                 }
 
-                // Pega e valida a quantidade (máximo 66)
                 let quantidade = parseInt(quantidadeInput.value);
                 if (!quantidade || quantidade < 10) quantidade = 10;
                 if (quantidade > 66) quantidade = 66;
                 quantidadeInput.value = quantidade;
 
                 const numerosGerados = [];
-                const maxTentativas = 2000;
+                const maxTentativas = 5000; // Aumentado o número de tentativas já que checamos mais colunas
                 let tentativas = 0;
 
-                // Gera os números solicitados
                 while (numerosGerados.length < quantidade && tentativas < maxTentativas) {
                     const numero = gerarNumeroAleatorio();
                     
-                    // Verifica se NÃO existe na coluna B e se não foi gerado nesta rodada
+                    // Verifica se NÃO existe em NENHUMA das colunas e se já não foi gerado agora
                     if (!numeroExiste(numero) && !numerosGerados.includes(numero)) {
                         numerosGerados.push(numero);
                     }
@@ -363,9 +382,8 @@
                 resultadoEl.classList.remove('hidden');
 
                 if (numerosGerados.length === quantidade) {
-                    numerosGeradosLista = numerosGerados; // Guarda para enviar
+                    numerosGeradosLista = numerosGerados;
 
-                    // Mostra os números UM EMBAIXO DO OUTRO
                     numerosGerados.forEach(numero => {
                         const item = document.createElement('div');
                         item.className = 'bg-white p-3 rounded-lg border border-gray-200 text-center';
@@ -373,7 +391,6 @@
                         listaNumerosEl.appendChild(item);
                     });
 
-                    // Calcula valor total
                     const total = (quantidade * VALOR_POR_COTA).toFixed(2).replace('.', ',');
                     valorFinalEl.textContent = `R$ ${total}`;
 
@@ -399,7 +416,6 @@
         enviarWhatsappBtn.addEventListener('click', () => {
             if (numerosGeradosLista.length === 0) return;
 
-            // Monta a mensagem com números um embaixo do outro
             let mensagem = '📋 Cotas Geradas:\n\n';
             numerosGeradosLista.forEach((numero, index) => {
                 mensagem += `${index + 1}° - ${numero}\n`;
@@ -408,17 +424,29 @@
             const total = (numerosGeradosLista.length * VALOR_POR_COTA).toFixed(2).replace('.', ',');
             mensagem += `\n💰 Valor total: R$ ${total}`;
 
-            // Codifica a mensagem para URL
             const mensagemCodificada = encodeURIComponent(mensagem);
-            // Link do WhatsApp
             const linkWhatsapp = `https://wa.me/${SEU_WHATSAPP}?text=${mensagemCodificada}`;
-            // Abre em nova aba
             window.open(linkWhatsapp, '_blank');
         });
 
         // Eventos
         gerarBtn.addEventListener('click', gerarEVerificar);
         document.addEventListener('DOMContentLoaded', carregarDadosPlanilha);
+    
+            // Controle de abertura do menu de 3 palitos
+        const menuBtn = document.getElementById('menuBtn');
+        const menuCard = document.getElementById('menuCard');
+
+        menuBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); // Impede o clique de fechar o card no mesmo instante
+            menuCard.classList.toggle('hidden');
+        });
+
+        // Fecha o card caso o usuário clique em qualquer outra parte da página
+        document.addEventListener('click', () => {
+            menuCard.classList.add('hidden');
+        });
+
     </script>
 </body>
 </html>
