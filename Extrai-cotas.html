@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extrator de Cotas - Prêmio Fácil</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0b4883',
+                        secondary: '#165DFF',
+                        gold: '#FFD700',
+                        success: '#00B42A',
+                        danger: '#F53F3F',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            }
+            .brilho {
+                box-shadow: 0 0 20px #165DFF;
+            }
+            .brilho-gold {
+                box-shadow: 0 0 15px #FFD700;
+            }
+            @keyframes piscar {
+                0%,100% { opacity:1; }
+                50% { opacity:0.6; }
+            }
+            .anim-piscar {
+                animation: piscar 1.5s infinite;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+
+    <!-- Cabeçalho -->
+    <header class="bg-gradient-to-r from-primary to-secondary py-4 px-4 shadow-md brilho">
+        <div class="container mx-auto text-center">
+            <h1 class="text-[clamp(1.8rem,4vw,2.5rem)] font-black text-white text-shadow uppercase tracking-wider flex items-center justify-center gap-3">
+                <i class="fa fa-clone text-gold"></i>
+                Extrator de Cotas
+            </h1>
+            <p class="text-white/90 text-sm md:text-base mt-1">Prêmio Fácil - Ferramenta de Extração Rápida</p>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="container mx-auto px-4 py-10 flex-grow">
+        <div class="max-w-3xl mx-auto bg-white rounded-2xl p-6 md:p-8 shadow-xl border-2 border-secondary/10">
+            
+            <!-- Instrução -->
+            <div class="mb-6 text-center">
+                <div class="inline-block bg-gold/20 text-primary font-semibold px-4 py-2 rounded-lg mb-3 anim-piscar">
+                    <i class="fa fa-info-circle mr-2"></i> Cole o texto completo abaixo
+                </div>
+                <p class="text-gray-600">Cole a mensagem do WhatsApp inteira com os dados com as cotas, o sistema vai pegar apenas os números das cotas automaticamente.</p>
+            </div>
+
+            <!-- Campo de Texto -->
+            <textarea 
+                id="campoTexto" 
+                class="w-full h-[220px] p-4 border-2 border-gray-300 rounded-xl focus:border-secondary focus:ring-2 focus:ring-secondary/20 text-gray-800 text-base font-mono resize-y transition-all"
+                placeholder="Cole aqui todo o texto: nome, quantidade, pagamento, link, pix, cotas..."></textarea>
+
+            <!-- Área dos Botões -->
+            <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                    id="btnExtrair" 
+                    class="bg-gradient-to-r from-primary to-secondary text-white font-bold py-3 px-8 rounded-xl hover:scale-105 transition-all brilho">
+                    <i class="fa fa-filter mr-2"></i> Extrair Cotas
+                </button>
+
+                <button 
+                    id="btnCopiar" 
+                    class="bg-gradient-to-r from-gold to-yellow-400 text-primary font-bold py-3 px-8 rounded-xl hover:scale-105 transition-all brilho-gold hidden">
+                    <i class="fa fa-copy mr-2"></i> Copiar Cotas
+                </button>
+            </div>
+
+            <!-- Mensagem de Sucesso -->
+            <div id="mensagemSucesso" class="mt-4 text-center text-success font-semibold hidden">
+                <i class="fa fa-check-circle mr-2"></i> Cotas copiadas com sucesso! Campo limpo e pronto para novo uso.
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Linha divisória bonita -->
+    <div class="w-full max-w-3xl mx-auto px-4">
+        <div class="w-full my-10 flex items-center justify-center gap-3">
+            <div class="flex-1 h-[3px] bg-gradient-to-r from-transparent via-secondary to-transparent rounded-full"></div>
+            <div class="w-3 h-3 rounded-full bg-gold animate-pulse"></div>
+            <div class="flex-1 h-[3px] bg-gradient-to-r from-transparent via-secondary to-transparent rounded-full"></div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-gradient-to-r from-primary to-secondary text-white/80 py-4 px-4 mt-auto brilho">
+        <div class="container mx-auto text-center text-sm">
+            <p>© 2026 Prêmio Fácil - Sistema de Extração Inteligente</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        const campoTexto = document.getElementById('campoTexto');
+        const btnExtrair = document.getElementById('btnExtrair');
+        const btnCopiar = document.getElementById('btnCopiar');
+        const mensagemSucesso = document.getElementById('mensagemSucesso');
+
+        // Função para extrair as cotas
+        btnExtrair.addEventListener('click', () => {
+            const textoCompleto = campoTexto.value.trim();
+            if (!textoCompleto) return;
+
+            // Regex: pega tudo que está entre "*Cotas:*" e "*Clique para nos enviar: 👉*"
+            const padrao = /\*Cotas:\*([\s\S]*?)\*Clique para nos enviar: 👉\*/;
+            const resultado = textoCompleto.match(padrao);
+
+            if (resultado && resultado[1]) {
+                // Limpa só os números e traços, remove espaços e quebras
+                const apenasNumeros = resultado[1].trim().replace(/\s+/g, ' ');
+                
+                // Coloca só as cotas no campo
+                campoTexto.value = apenasNumeros;
+
+                // Troca os botões
+                btnExtrair.classList.add('hidden');
+                btnCopiar.classList.remove('hidden');
+            } else {
+                alert('❌ Formato não reconhecido! Verifique se o texto tem exatamente:\n*Cotas:*\n... números ...\n*Clique para nos enviar: 👉*');
+            }
+        });
+
+        // Função para copiar e resetar
+        btnCopiar.addEventListener('click', async () => {
+            const textoParaCopiar = campoTexto.value.trim();
+            
+            try {
+                // Copia para área de transferência
+                await navigator.clipboard.writeText(textoParaCopiar);
+                
+                // Mostra mensagem
+                mensagemSucesso.classList.remove('hidden');
+                
+                // Reseta tudo após 2 segundos
+                setTimeout(() => {
+                    campoTexto.value = '';
+                    btnCopiar.classList.add('hidden');
+                    btnExtrair.classList.remove('hidden');
+                    mensagemSucesso.classList.add('hidden');
+                }, 2000);
+
+            } catch (erro) {
+                alert('Erro ao copiar. Selecione o texto e copie manualmente.');
+            }
+        });
+    </script>
+
+</body>
+</html>
