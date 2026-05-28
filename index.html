@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -853,16 +854,26 @@ const valorTotal = valorCalculado.toFixed(2).replace('.', ',');
 const linkPagamento = listaLinksPagamento[valorTotal] || "https://mpago.la/LINK_PADRAO_CASO_NAO_ENCONTRE";
 
 // Prepara a mensagem do WhatsApp com o link correto inserido
-const textoMensagem = `Olá, ${nome}! \n\n
+const textoMensagem = `Olá, ${nome}!\n
             Suas cotas foram geradas com sucesso.\n\n
-            *Quantidade:* ${cotasGeradas.length} cotas\n
-            *Total:* R$ ${valorTotal}\n\n
+                        
             *Metodos de pagamentos:*\n
-            *Link de Pagamento:* ${linkPagamento}\n\n
-            *Chave Pik:* 62 995679219\n
+            *Link de Pagamento:* ${linkPagamento}\n
+            *Chave Pix:* 62 995679219\n
             *NOME:* Mayckon Jhonatas\n\n
+            
+            *INFORMAÇÕES DO COMPUTADOR:*\n\n
+            *Nome:* ${nome}\n
+            *Contato:* ${whatsapp}\n
+            *Quantidade:* ${cotasGeradas.length} cotas\n
+            *Total:* R$ ${valorTotal}\n
             *Cotas:* \n${cotasGeradas.join(' - ')}\n\n
-            *Clique para nos enviar: 👉*`;
+            
+            *AGRADECIMENTOS:*\n
+            A Prêmio Fácil agradece a sua participação.\n
+            *🍀 BOA SORTE 🍀\n\n
+            *Clique para nos enviar:*\n
+            👉👉👉👉👉👉`;
 const urlWhatsapp = `https://api.whatsapp.com/send?phone=${whatsapp}&text=${encodeURIComponent(textoMensagem)}`;
 
             // Redireciona para o WhatsApp
